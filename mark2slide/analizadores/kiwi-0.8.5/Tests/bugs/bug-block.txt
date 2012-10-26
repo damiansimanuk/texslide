@@ -1,0 +1,29 @@
+
+  First things first, let's start with a simple Pamela example:
+
+  <<<
+    <html
+      <head
+        <title:My first Pamela document
+      <body
+
+        <h1:I like Pamela
+
+        <p:Pamela allows you to write HTML documents in a simple and nice way
+          that is less error-prone than the usual way to write HTML documents.
+
+        <h1:Links
+
+        Pamela was inspired by:
+        <ul
+          <li:the <a(href=http://haml.hamptoncatlin.com/tutorial):HAML> project
+          <li:the <a(href=http://slip.sf.net):SLIP> project
+  >>>
+
+  this example will be translated to
+
+  <<<
+    TODO
+  >>>
+
+

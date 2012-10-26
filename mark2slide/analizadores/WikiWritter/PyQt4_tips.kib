@@ -1,0 +1,53 @@
+= Some PyQt4 tips
+
+== Transforming the ui file
+
+{{{pycon
+
+pyuic4 -o ui_myfile.py -x ui_myfile.ui
+}}}
+
+== Translating signals/slot between C++ and Python 
+
+If you read Qt4's doc, you may find some signals like this in C++:
+
+{{{cpp
+
+void itemDoubleClicked ( QTableWidgetItem * item )
+}}}
+
+In PyQt4, you'll have to use the following signal (**//don't forget the star char !//**) :
+
+{{{python
+
+QtCore.SIGNAL("itemDoubleClicked (QTableWidgetItem*)")
+}}}
+
+Another one, a QComboBox signal:
+
+{{{cpp
+
+void currentIndexChanged ( const QString & text )
+}}}
+
+it has to be translated like this (**//the string is a constant here, so you'll have to tell it to PyQt//**):
+
+{{{python
+
+QtCore.SIGNAL("currentIndexChanged(const QString)")
+}}}
+
+== Mouse handling
+
+=== Wheel events
+
+You can catch any wheel event by defining a wheelEvent method on your widget, ie :
+
+{{{python
+
+def wheelEvent(self, event):
+    if event.delta() > 0 :
+        print "delta positive"
+    else:
+        print "delta negative"
+}}}

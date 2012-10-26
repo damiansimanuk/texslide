@@ -1,0 +1,38 @@
+Type protocol
+=============
+
+The type protocol specifies how a server should express a _type definition_.
+Type definitions allow the server to communicate the detail about the
+available object types to the client:
+
+  - the type name (_class name_), with optionally a singular and plural form that
+    will help generating a nicer API on the client-side.
+    |
+    The type name is the one that you'll use as a key for the 'types' dictionary
+    of the world interface. This is this name (and only this name) that will be
+    used to resolve type names found in object JSON encodings.
+
+  - the operations which are available for the
+    type (_static methods_) and to objects of this type (_instance methods_).
+
+  - the attributes of the instances of the type.
+
+  - specific operations, such as an operation to create (_constructor_) a new
+    instance, an operation to destroy (_destructor_) an existing instance, an
+    _accessor_ (to access an object attributes), a _mutator_ (to mutate an object
+    attributes), a _validator_ (to validate a possible value), and an optional
+    _enumerator_ (allows to iterate through objects of the type).
+
+
+  Note _________________________________________________________________________
+  When defining _operations_ and _attributes_, you should make sure that none
+  have the same names. In practice, attributes will be encapsulated by the
+  clients, and the reasonable default is to use the attribute name for the
+  accessor method (rather than set/get methods). This is the case for the
+  default JavaScript client implementation.
+
+The type definition really acts a gateway to interacting with objects. The world
+interface tells the client how to access values, but the type definition tells
+the client how to operate on the objects, while also giving more information
+about their structure (like attributes and type name).
+

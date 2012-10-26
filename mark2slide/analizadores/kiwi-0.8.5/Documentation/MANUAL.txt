@@ -1,0 +1,504 @@
+== Kiwi User Manual
+-- Authors: Sébastien Pierre <sebastien@type-z.org>
+-- Revision: 0.8.6
+
+1. Introduction
+===============
+
+  Kiwi is yet-another-markup language which is designed to be used for writing
+  your documentation in an text editor such as Vi or Emacs.
+
+  Most existing markups are designed to be used as wiki/web markup, with the
+  implication that they do not expect the markup content to use indentation to
+  express structure.
+
+  When writing long documents (like tech notes, or manuals) in ASCII format, it
+  is good to use as many visual cues (underlining, indentation) to express
+  the structure of the document. Kiwi is one of the few markup engines that is
+  designed with in this perspective from the ground.
+
+  Additionaly, Wiki can be used as a wiki/web markup engine, as it is quite
+  close (but not exactly similar) to [Markdown][MARKDOWN]
+
+  Kiwi comes with a nice command-line interface, can be embedded in
+  applications, and is integrated into [Tahchee] and [SDoc] (which are other Ivy
+  projects).
+
+2. Features
+===========
+
+  Kiwi support syntactic shortcuts for the following elements of a documents:
+
+    - Sections and paragraphs
+    - Various types of lists, including definition lists
+    - Tables
+    - Emphasis, underline, preformatted, email address, URLs
+    - Quote, citation
+    - Linking and references
+
+  Kiwi is also:
+
+    - Written in pure Python
+    - Comes with full API documentation
+    - Can be easy customized with your own markup
+
+2. Quick start
+==============
+
+  To get up and running with Kiwi, you will need a Python interpreter, as well as
+  the `make` command (it is not required if you want to install Kiwi manually):
+
+    - Unpack the latest Kiwi tarball available at <http://www.ivy.fr/kiwi/kiwi-latest.tar.gz>
+    - Type `make install` to install Kiwi in `/usr/local/share/kiwi`
+    - The `kiwi` command should now be available to you
+
+  If you wish to install Kiwi manually, simply:
+
+    - Move the `Sources/kiwi` directory somewhere in your `PYTHON_PATH` (this
+      may be Python `site-packages` directory)
+    - Create a script that invokes
+      > python -c "import sys,kiwi.main;kiwi.main.run(sys.argv[1:])"
+
+  Now, you can play with the `kiwi` command with any example provided in the `Tests`
+  directory, to get a feel of what it is like. Note that `kiwi -p` produces a
+  pretty-printed XML tree, and `kiwi -m` produces a (compacted) HTML file.
+
+3. Basics
+=========
+
+  The basic structure of a Kiwi document is the following
+
+  3.2 Paragraphs
+  --------------
+
+  Once you have written this very simple document you may want to add some
+  content, for example paragraphs and lists. Both paragraph and lists (and
+  also sections) are *structural elements*, which means that they help you to
+  structure the content of the document.
+
+  Writing !paragraphs! is pretty simple, you basically just have to type your
+  text, taking care that all lines have the same *indentation*, and insert a
+  blank line between your paragraphs.
+
+  You may want to insert !line breaks! within your paragraphs. In this case
+  instead of separating the two parts of your paragraph by a blank line,
+  which would lead Kiwi to consider that your paragraph is in fact two
+  paragraphs, you insert a *pipe* character on the blank line.
+
+  Here is an example of a paragraph with a line break in it:
+
+  >   Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+  >   blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+  >   |
+  >   Here we are still in the same paragraph. Blah blah blah blah blah blah blah
+  >   blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+
+  3.3 Lists
+  ---------
+
+  The other important structural elements are !lists!. Kiwi provides two
+  types of lists: the *classic lists* and the *definition lists*. The
+  *classic list* only lists items, whereas the *defintion list* offers a way
+  to list terms and give a definition to them.
+
+  These two types are not very different, I will explain the differences
+  later. Basically a list is composed of an *optional list heading* which is
+  a sentence that ends with a colon, like this:
+
+  >   Here is simple list heading: 
+
+
+  This optional heading can span over many lines, provided there
+  is no paragraph break between those lines.
+
+  The other component of a list are of course *list items* which begin with a
+  dash or a single letter or digit with a closing paren, which is followed by
+  an *optional list item heading*, which is also followed by a *list item
+  body*.
+
+  Here is the example of a least that illustrate the differents aspects of the
+  lists:
+
+  >    Here is simple list heading: 
+  >      -  Here is the optional list heading:
+  >         Here is the list body
+  >      b) Here is another list item. Note that the indentation of the text
+  >         must be the same as the preceding list item, otherwise it may be
+  >         interpreted as a nested list.
+  >   
+  >      1) We can also jump lines between list items.
+  >         - And make nested list items
+  >         - Heading: That also have a list item heading.
+
+      Note __________________________________________________________________
+      When writing lists, take *great care* with indentation, as if the
+      different lines are not properly indented, some lists items could be
+      interpreted as nested lists.
+
+  3.4 Definitions
+  ---------------
+
+  You may sometimes want to do group paragraphs or whole subsets of your
+  document under a particular term (or qualifier). For instance, if you are
+  defining concepts, or describing different elements, you may want to tell
+  that a set of paragraphs belong to that particular element.
+
+  This is the purpose of the _definition lists_: they provide a mean to
+  express a term (or a sentence), and the following elements with a higher
+  indentation will be considered as being part of the term definition.
+
+  >   Term::
+  >   
+  >       Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras accumsan. 
+  >       
+  >       Nullam ac purus quis magna consectetuer luctus. Duis sit amet sem. 
+  >   
+  >   Other term::
+  >   
+  >       Donec a magna mattis dolor semper pulvinar. Donec viverra libero sit amet dolor.
+  >       Duis ut ante at lacus pharetra iaculis.
+
+  Will be rendered as
+
+    Term::
+    
+      Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras accumsan. 
+      
+      Nullam ac purus quis magna consectetuer luctus. Duis sit amet sem. 
+    
+    Other term::
+    
+      Donec a magna mattis dolor semper pulvinar. Donec viverra libero sit amet dolor.
+      Duis ut ante at lacus pharetra iaculis.
+
+  3.4 Notes and annotated blocks
+  ------------------------------
+
+  >   Note ______________________________________________________________
+  >   Lorem ipsum dolor si amet
+
+  will be displayed a
+
+    Note ______________________________________________________________
+    Lorem ipsum dolor si amet
+
+  You can also write a note than contains multiple paragraphs:
+
+  >   Note ______________________________________________________________
+  >   
+  >   Lorem ipsum....
+  >   
+  >   Dolor si amet...
+  >   
+  >   _____________________________________________________________________
+
+  Notes are actually _annotated blocks_, which are blocks surrounded by an
+  annotation (here, the annotation is `Note`). You can use many other
+  annotations (such as  `Example`, `Use case`, etc..), as with annotations
+  will be translated to a lower-case class attribute in your resulting
+  HTML document. So you simply have to add the styles you want in your CSS
+  stylesheet to support more annotations blocks.
+
+      Note ________________________________________________________________
+
+      As with lists, _indentation is primordial_. Your note block should be
+      more indented than the parent paragraph. All paragraphs with the same
+      indentation level as the note will be considered part of the note.
+
+  3.5 Sections and subsections
+  ----------------------------
+
+  Once you have written your text you may want to add structure, for example
+  you may want to create sections, sub sections, etc. If you want to create
+  !sections! and also nested sections, you just have to insert a *section
+  heading* in your text.
+
+  A *section heading* consists in a single line of text that is prefixed by
+  an optional section number, which is constituted of digits separated by
+  dots. Then follows an optional underline, like the following example shows:
+
+  >   Section level 1
+  >   ===============
+  >   
+  >   Section level 2
+  >   ---------------
+  >   
+  >   1. Section level 3
+  >   ------------------
+  >   
+  >   1.2 Section level 4
+
+  The leading number is not required when the section is underlined (using '==='
+  or '---'), but it does indicate the depth of the section ('1' means depth 1,
+  '1.1' means depth 2, '1.1.a' means depth 3, etc).
+
+  Section depths are computed using the following rules:
+  
+  1)  Sections underlined with '===' are have a lower depth than sections with
+      '---', which in turn have a lower depth sections without underlining.
+
+  2)  Sections with no number will have a lower depth than sections with 1
+      number ('1. Section'), which have a lower depth than sections with 2
+      numbers ('1.1 Section'), etc.
+
+  3)  Sections which are explicitly indented will have a depth which is at least
+      equal to their parent section.
+
+  Alternatively, you can also write sections by prefixing the title by a number
+  of '=' like that:
+
+  >   == Section level 1
+  >   === Section level 2
+  >   ==== Section level 3
+
+  this notation is designed for people who don't indent their text and sections
+  (if you are using Kiwi as markup language for a Web wiki, for instance). The
+  depth of the section is identified by counting the number of '=' characters,
+  where the first does not count.
+  
+      Note ________________________________________________________________
+
+      Kiwi section markup is very flexible, and allows you to use indentation,
+      numbers or different underlines to denote the depth of your sections.
+      Numbering is not important as the section numbering will be recalculated
+      anyway, so you can use 'X.X' instead of '1.2'. This will make your life
+      easier when typing large documents.
+
+
+  3.6 Tables
+  ----------
+
+   Tables are written using the following markup:
+
+   == Tables
+   ===================================================================
+   Table header    || ``== Header``
+   -------------------------------------------------------------------
+   Row separator   || Use a line of dashes, equal signs or plus signs
+   -------------------------------------------------------------------
+   Cell separator  || ``||``
+   ===================================================================
+
+   Optionally, table borders can use single pipes ``|``.
+
+   The previous feature table has been written using the following markup:
+
+   >       == Tables
+   >       ===================================================================
+   >       Table header    || ``== Header``
+   >       -------------------------------------------------------------------
+   >       Row separator   || Use a line of dashes, equal signs or plus signs
+   >       -------------------------------------------------------------------
+   >       Cell separator  || ``||``
+   >       =============================================
+
+
+  3.7 Preformatted text
+  ---------------------
+
+  There are two ways of doing preformatted text. The first one is by prefixing
+  each line of your text by '>' plus one tab or at least 3 spaces.
+
+  >   >   def hello():
+  >   >     print "Hello, world !"
+
+  will be rendered as
+
+  >   def hello():
+  >     print "Hello, world !"
+
+  Using this '>' markup  helps explicitly delimiting a block and visually
+  denoting where the indentation starts. However, this markup makes typing and
+  copy-pasting more difficult, which is why we provide an alternative markup:
+
+  >   <<<
+  >   def hello():
+  >      print "Hello, world !"
+  >   >>>
+
+  which produces the same result
+
+  <<<
+  def hello():
+  print "Hello, world !"
+  >>>
+
+  but involves less typing. The rule for this is that you have '<<<' and '>>>'
+  standing on empty lines, and that the lines within these delimiters are
+  either empty or have at least the same indentation as the delimiters.
+
+  3.8 Document header and title
+  -----------------------------
+
+  todo
+
+  3.9 Links and bibliographic references
+  --------------------------------------
+
+  Kiwi supports internal (within document links) and external links (urls,
+  files, etc). Internal links are expressed like that:
+
+  >   Some text [the link][TARGET] ...
+
+  where 'TARGET' is a link to a _bilbiographic entry_, to a specific _target_,
+  or is a string that can identify without ambiguity a section.
+
+  For instance, if I wanted to reference the ''Document header and title''
+  section of this document, I would do:
+
+  >   [previous section][document header]
+
+  Additionally, it is possible to omit the 'TARGET'. In that case, the text of
+  the link itself will be used as the target. We could have expressed the
+  previous link like that:
+
+  >   here is a link to the [document header] section
+
+  If you want to define a specific _anchor_ for a link in your document, you can
+  simply use the following notation
+
+  >   |ANCHOR|Some text...
+
+  Anchors will not be displayed in the resulting document. If you'd like the
+  anchor to contain some text, you can do
+
+  >   |ANCHOR:Some text|
+
+  And then the anchor will span the text you indicate
+
+      Note ___________________________________________________________________
+      It is not possible to use Kiwi markup within an anchor text.
+
+  If you'd like the anchor name to be the same as the displayed text, you could
+  do:
+
+  >   |ANCHOR:|
+
+
+4. Syntax summary
+=================
+
+  Now you are able to write basic text documents, but you may want to go
+  further. Kiwi provide way to mark up everything in your documents. Some
+  ways to put this mark-up are simple and quick, some other ways are made
+  possible using *custom tags*, which we will discover very soon.
+
+  For the moment, here is the list of the available content mark up
+  facilities:
+
+  ===================================================================
+  **Inlines**
+  ===================================================================
+  Emphasis || ``*emphasized*``           || *emphasized*
+  -------------------------------------------------------------------
+  Strong   || ``**strong**``             || **strong**
+  -------------------------------------------------------------------
+  Code     || `` `code` ``               || `code`
+  -------------------------------------------------------------------
+  Term     || `` _term_ ``               || `term`
+  -------------------------------------------------------------------
+  Quoted   || ``''quoted text''``        || ''quoted text''
+  -------------------------------------------------------------------
+  Citation || <code>«a citation»</code>  || «a citation»
+  ===================================================================
+  **Linking**
+  ===================================================================
+  URL        || `<http://www.myurl.com/page>` || <http://www.myurl.com/page>
+  -------------------------------------------------------------------
+  Email      || `<writeme@mail.com>` || <writeme@mail.com>
+  -------------------------------------------------------------------
+  Link       || `some [linked text](http://www.myurl.com "title") ...` || some [linked text](http://www.myurl.com "title") ...
+  -------------------------------------------------------------------
+  Local link || `some [linked text](../README "title") ...` || some [linked text](../README "title") ...
+  -------------------------------------------------------------------
+  Ref Link   || `some [referenced text][MYREF] ...` || some [referenced text](MYREF) ...
+  -------------------------------------------------------------------
+  Ref Entry  ||`    [REF:] My reference ...` || Will be associated to the above reference
+  ===================================================================
+  **Misc characters**
+  ===================================================================
+  Break       || `|`                    || Breaks the current paragraph
+  -------------------------------------------------------------------
+  Newline     ||     `\n`               || Inserts a newline
+  -------------------------------------------------------------------
+  Longdash    ||    ` -- ` or ` --- `   || longdash  --  or  --- 
+  -------------------------------------------------------------------
+  Dots        ||    ` ... `             || dots ( ... )
+  -------------------------------------------------------------------
+  Arrows      ||    ` <-->, -->, <-- `  || arrows <-->, -->, <-- 
+  -------------------------------------------------------------------
+  Entities    ||    `&copy;`, `#&138;`  || &copy;, #&138;
+  ===================================================================
+  **Escaping**
+  ===================================================================
+  Block       || `<[escaped _text_]>`   || <[escaped _text_]>
+  --------------------------------------------------------------------
+  Text        || `\"escaped _text_"`    || \"escaped _text_"
+  ===================================================================
+
+  The different way of marking up listed above should be sufficient for most
+  of your needs. However, if you have more particular needs, you can very
+  easily create your own syntax and extend Kiwi. This is the purpose of the
+  next section.
+
+5. Hacking Kiwi
+===============
+
+  Kiwi is not only a standalone application, it is also a flexible text
+  parsing library that comes with a very easy to use templating system for XML
+  documents.
+
+  Kiwi is actually embedded within [Tahchee](http://www.ivy.fr/tahchee) as a
+  text to HTML plugin that makes it easy to write Web pages.
+
+Relation to Markdown and other text markups
+===========================================
+
+  _Kiwi_ is actually very close to [Markdown][MARKDOWN] (a very well done text
+  markup), but it has a few noticeable differences: 
+
+   - Code blocks must be prefixed by `>` characters (in Markdown, this is the
+     notation for blockquoted. We decided to use this in Kiwi because code blocks
+     usually contain blank lines, so we wanted to make explicit that the code
+     block contained a block line.
+
+   - Block quotes must be indented, and not prefixed by the `>` characters. Block
+     quotes are just like other paragraphs, so we did not want them to have a
+     different formatting. So the notation for block quotes and code blocks are
+     just the opposite of Markdown.
+
+   - Underscore notation represents a _term_ in Kiwi, while in Markdown it is the
+     same as using `*` (emphasis)
+
+   - You can really insert your HTML markup anywhere, you have no limitations as
+     in Markdown
+
+  Here are features that are not found in Markdown:
+
+   - Table support
+   - Notes, examples, and groups
+   - Footnotes
+   - Detailed bilbiographic references
+
+  Kiwi markup was designed to be even more flexible, than markdown,
+  especially when using inline HTML. When writing HTML in Kiwi, the only
+  requirement is to conform to an XML syntax, which means that every
+  opened tag must be closed, otherwise a warning will be issued during the
+  translation.
+
+  [Asciidoc][ASCIIDOC] is another well supported and powerful markup to HTML
+  (and PDF) processor, which is helpful in writing documentation. ASCIIDOC may
+  be more powerful than Kiwi for writing large or complex documents.
+  However, we believe that Kiwi is more adapted to common documentation
+  requirements, and can be easily customized to meet specific requirements.
+
+  Kiwi has been in development for more than 5 years (it used to be named
+  SimTex) and has a mature architecture, which proved to be both flexible and
+  fast. It was designed to be extensible and easily embeddable in Web
+  applications for easy text to HTML conversion (which is always useful, even
+  if WYSIWIG editors are now available).
+
+  [MARKDOWN]: <http://daringfireball.net/projects/markdown/syntax>
+  [ASCIIDOC]: <http://www.methods.co.nz/asciidoc/>
+
+# vim: ts=2 sw=2 tw=80 et fenc=latin-1 syn=kiwi

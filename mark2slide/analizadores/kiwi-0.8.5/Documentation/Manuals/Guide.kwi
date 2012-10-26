@@ -1,0 +1,282 @@
+== KIWI USER MANUAL
+-- Authors: Sébastien Pierre <sebastien@type-z.org>
+-- Revision: 0.7.6
+
+1. Introduction
+===============
+
+Kiwi aims to be an easy way to edit XML and HTML documents, by allowing to use
+syntactic shortucts (à la *Wiki*) to be mixed with regular XML/HTML markup.
+
+There already exist many text markup language that easily allow to generate
+XML/HTML/DocBook/Texinfo, etc. However, none was flexible enough to be easily
+customize the markup or the output documents.
+
+Kiwi was designed to be small, simple and versatile. Its source is easily
+readable and can be very easily extended/tweaked to match your need.
+
+2. Features
+===========
+
+Kiwi support syntactic shortcuts for the following elements of a documents:
+
+	- Sections and paragraphs
+	- Various types of lists, including definition lists
+	- Tables
+	- Emphasis, underline, preformatted, email address, URLs
+	- Quote, citation
+	- Linking and references
+
+Kiwi is also:
+
+	- Written in pure Python
+	- Comes with full API documentation
+	- Can be easy customized with your own markup
+
+2. Quick start
+====================
+
+To get up and running with Kiwi, you will need a Python interpreter, as well as
+the `make` command (it is not required if you want to install Kiwi manually):
+
+	- Unpack the latest Kiwi tarball available at <http://www.ivy.fr/kiwi/kiwi-latest.tar.gz>
+	- Type `make install` to install Kiwi in `/usr/local/share/kiwi`
+	- The `kiwi` command should now be available to you
+
+If you wish to install Kiwi manually, simply:
+
+	- Move the `Sources/kiwi` directory somewhere in your `PYTHON_PATH` (this
+	  may be Python `site-packages` directory)
+	- Create a script that invokes
+	  > python -c "import sys,kiwi.main;kiwi.run(sys.argv[1:])"
+
+Now, you can play with the `kiwi` command with any example provided in the `Tests`
+directory, to get a feel of what it is like. Note that `kiwi -p` produces a
+pretty-printed XML tree, and `kiwi -m` produces a (compacted) HTML file.
+
+3. Basics
+=========
+
+The basic structure of a Kiwi document is the following
+
+3.2 Paragraphs
+--------------
+
+Once you have written this very simple document you may want to add some
+content, for example paragraphs and lists. Both paragraph and lists (and
+also sections) are *structural elements*, which means that they help you to
+structure the content of the document.
+
+Writing !paragraphs! is pretty simple, you basically just have to type your
+text, taking care that all lines have the same *indentation*, and insert a
+blank line between your paragraphs.
+
+You may want to insert !line breaks! inside your paragraphs. In this case
+instead of separating the two parts of your paragraph by a blank line,
+which would lead Kiwi to consider that your paragraph is in fact two
+paragraphs, you insert a *pipe* character on the blank line.
+
+Here is an example of a paragraph with a line break in it:
+
+>	Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+>	blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+>	|
+>	Here we are still in the same paragraph. Blah blah blah blah blah blah blah
+>	blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+
+3.3 Lists
+---------
+
+The other important structural elements are !lists!. Kiwi provides two
+types of lists: the *classic lists* and the *definition lists*. The
+*classic list* only lists items, whereas the *defintion list* offers a way
+to list terms and give a definition to them.
+
+These two types are not very different, I will explain the differences
+later. Basically a list is composed of an *optional list heading* which is
+a sentence that ends with a colon, like this:
+
+>	Here is simple list heading: 
+
+[start note]This optional heading can span over many lines, provided there
+is no paragraph break between those lines.[end note]
+
+The other component of a list are of course *list items* which begin with a
+dash or a single letter or digit with a closing paren, which is followed by
+an *optional list item heading*, which is also followed by a *list item
+body*.
+
+Here is the example of a least that illustrate the differents aspects of the
+lists:
+
+>	 Here is simple list heading: 
+>	   -  Here is the optional list heading:
+>		  Here is the list body
+>	   b) Here is another list item. Note that the indentation of the text
+>		  must be the same as the preceding list item, otherwise it may be
+>		  interpreted as a nested list.
+>	
+>	   1) We can also jump lines between list items.
+>		  - And make nested list items
+>		  - Heading: That also have a list item heading.
+
+[start note]When writing lists, take *great care* with indentation, as if the
+different lines are not properly indented, some lists items could be
+interpreted as nested lists.[end note]
+
+Creating *definition lists* is very similar to classic lists, as this type
+of list simply has a required *list item heading* which should end with a
+backslash.
+
+3.3 Sections and subsections
+----------------------------
+
+Once you have written your text you may want to add structure, for example
+you may want to create sections, sub sections, etc. If you want to create
+!sections! and also nested sections, you just have to insert a *section
+heading* in your text.
+
+A *section heading* consists in a single line of text that is prefixed by
+an optional section number, which is consitiued of digits separated by
+dots. Then follows an optional unerline, like the following example shows:
+
+>	1. I am Section
+>	
+>	I am also a Section
+>	===================
+>	
+>	1.1 I am a nested section
+>	=========================
+
+The leading number is not required, but it does indicate the depth of the
+section. Two criteria are taken in concern for indentifying the section
+position in the section hierarchy. The first criterium is the prefixing
+number which tells (by the number of imbricated digits) if the section is a
+simple section, sub section etc. The other criterium is the indentation
+relatively to the preceding section.
+
+4. Available syntax shortcuts
+==========================================
+
+Now you are able to write basic text documents, but you may want to go
+further. Kiwi provide way to mark up everything in your documents. Some
+ways to put this mark-up are simple and quick, some other ways are made
+possible using *custom tags*, which we will discover very soone.
+
+For the moment, here is the list of the available content mark up
+facilities:
+
+	== Inlines
+	===================================================================
+	Emphasis	|| ``*emphasized*``		|| *emphasized*
+	-------------------------------------------------------------------
+	Strong		|| ``**strong**``		|| **strong**
+	-------------------------------------------------------------------
+	Code		|| `` `code` ``			|| `code`
+	-------------------------------------------------------------------
+	Term		|| `` _term_ ``			|| `term`
+	-------------------------------------------------------------------
+	Quoted		|| ``''quoted text''``	|| ''quoted text''
+	-------------------------------------------------------------------
+	Citation	|| <code>«a citation»</code>	|| «a citation»
+	===================================================================
+
+	== Linking
+	===================================================================
+	URL			|| `<http://www.myurl.com/page>`	|| <http://www.myurl.com/page>
+	-------------------------------------------------------------------
+	Email		|| 	`<writeme@mail.com>`			|| <writeme@mail.com>
+	-------------------------------------------------------------------
+	Link		|| 	`some [linked text](http://www.myurl.com "title") ...` || some [linked text](http://www.myurl.com "title") ...
+	-------------------------------------------------------------------
+	Local link	||	`some [linked text](../README "title") ...` || some [linked text](../README "title") ...
+	-------------------------------------------------------------------
+	Ref Link	|| 	`some [referenced text][MYREF] ...` || some [referenced text](MYREF) ...
+	-------------------------------------------------------------------
+	Ref Entry	|| 	`	[REF:] My reference ...` || Will be associated to the above reference
+	===================================================================
+
+	== Misc characters
+	===================================================================
+	Break		|| `|`					|| Breaks the current paragraph
+	-------------------------------------------------------------------
+	Newline		|| 	`\n`				|| Inserts a newline
+	-------------------------------------------------------------------
+	Longdash	||	` -- `				|| longdash --
+	-------------------------------------------------------------------
+	Dots		||	` ... `				|| dots ...
+	-------------------------------------------------------------------
+	Arrows		||	` <-->, -->, <-- `	|| arrows <-->, -->, <-- 
+	===================================================================
+
+
+Titles:
+
+Sections:
+
+Notes:
+
+	>	NOTE ______________________________________________________________
+	>	asdaskldadlasdk asdasjkdsa jksad
+	>	____________________________________________________________________
+
+	will be displayed as
+
+	NOTE ______________________________________________________________
+	asdaskldadlasdk asdasjkdsa jksad
+	___________________________________________________________________
+
+Specific sections:
+
+	>	Example _______________________________________________
+	>
+	>	This is an example
+	>	_______________________________________________________
+
+
+Tables:
+
+
+The different way of marking up listed above should be sufficient for most
+of you needs, but we will seen now how to extend the possibilities of
+Kiwi to best suite your marking needs.
+
+Relation to Markdown
+====================
+
+_Kiwi_ is actually very close to [Markdown][MARKDOWN], excepted for small
+differences :
+
+ - Code blocks must be prefixed by `>` characters (in Markdown, this is the
+   notation for blockquoted. We decided to use this in Kiwi because code blocks
+   usually contain blank lines, so we wanted to make explicit that the code
+   block contained a block line.
+
+ - Block quotes must be indented, and not prefixed by the `>` characters. Block
+   quotes are just like other paragraphs, so we did not want them to have a
+   different formatting. So the notation for block quotes and code blocks are
+   just the opposite of Markdown.
+
+ - Underscore notation represents a _term_ in Kiwi, while in Markdown it is the
+   same as using `*`.
+
+ - You can really insert your HTML markup anywhere, you have no limitations as
+   in Markdown
+
+Here are features that are not found in Markdown:
+
+ - Table support
+ - Notes, examples, and groups
+ - Footnotes
+ - Detailed bilbiographic references
+
+
+Kiwi markup was designed to be even more flexible, than markdown,
+espectially when using inline HTML. When writing HTML in Kiwi, the only
+requirement there is is to conform to an XML syntax, which means that every
+opened tag must be closed, otherwise a warning will be issued during the
+translation.
+
+	[MARKDOWN]: <http://daringfireball.net/projects/markdown/syntax>
+
+

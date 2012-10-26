@@ -1,0 +1,312 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+
+
+body 
+{
+  margin: 40px 0px; 
+  padding: 0px;
+  text-align: center;
+  font-size: 28px;
+  line-height: 100%;
+  font-family: Times, Serif;
+  background-color: #eee;
+	background-image: -moz-linear-gradient(top, #b5d9f9 100%, #4f8acc 0%);
+	background-image: -webkit-linear-gradient(top, #b5d9f9 100%, #4f8acc 0%);
+}
+
+p
+{
+}
+
+.section
+{
+  width: 820px;
+  margin: 0px auto;
+	background-image: -moz-linear-gradient(top, #b5d9f5 0%, #4f8acc 100%);
+	text-align: left;
+  line-height: 130%;
+   -moz-border-radius: 20px;
+  border-radius: 20px;
+  padding: 20px;
+  border-width: 1px;
+  border-style: solid;  
+  border-color: black;
+  background-color: #fff;
+}
+
+h1 
+{
+  font-size: 70px;
+  line-height: 100%;
+  text-align: left;
+}
+
+h2 
+{
+  font-size: 48px;
+  line-height: 110%;
+  text-align: left;
+  border-bottom: 1px solid;
+}
+
+li
+{
+  text-align: left;
+}
+
+code
+{
+  font-size: 20px;
+  font-family: monospace;
+}
+
+
+</style>
+<script type="text/javascript">
+
+// Copyright 2012 Jaime Lopez <jailop@gmail.com>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+var active = 0;
+var nslides = 0;
+var sl;
+
+
+//~  expandir...
+var expanded = false;
+var expandSlides = function() {
+	//~ alert("expandSlides");
+	//~ if (overviewActive) {
+		//~ return;
+	//~ }
+	//~ if (expanded) {
+		//~ setScale(1);
+		//~ expanded = false;
+	//~ } else {
+		//~ scale = computeScale();
+		//~ setScale(scale);
+		//~ expanded = true;
+	//~ }
+	
+	//~ alert("hola mundo");
+	scale = computeScale();
+	
+	if (scale != 1) {
+		setScale(scale);
+	} 
+};
+  
+var computeScale = function() {
+	//~ alert("computeScale");
+	var cSlide = document.getElementsByClassName('section')[0];
+	var sx = cSlide.clientWidth / window.innerWidth;
+	var sy = cSlide.clientHeight / window.innerHeight;
+	return 1 / Math.max(sx, sy);
+};
+
+var setScale = function(scale) {
+	//~ alert("setScale");
+	var presentation = document.getElementsByClassName('section')[0];
+	//~ var presentation = document.getElementsByTagName('div')[0];
+	var transform = 'scale(' + scale + ')';
+	presentation.style.MozTransform = transform;
+	presentation.style.WebkitTransform = transform;
+	presentation.style.OTransform = transform;
+	presentation.style.msTransform = transform;
+	presentation.style.transform = transform;
+};
+
+//~ end expandir
+
+
+function hidenav()
+{
+	sl = document.getElementsByTagName('div');
+	nslides = sl.length;
+	for (i = 0; i < nslides; i++) {
+		sl[i].style.width = screen.width * 0.7;
+		sl[i].style.height = screen.height * 0.8;
+		if (i > 0)
+			sl[i].style.display = "none";
+	}
+}
+
+function next() {
+	if (active < nslides - 1) {
+		sl[active].style.display = "none";
+		active += 1;
+		sl[active].style.display = "block";
+	}
+}
+
+function prev() {
+	if (active > 0) {
+		sl[active].style.display = "none";
+		active -= 1;
+		sl[active].style.display = "block";
+	}
+}
+
+function first() { 
+	sl[active].style.display = "none";
+	active = 0;
+	sl[active].style.display = "block";
+}
+
+function last() {
+	sl[active].style.display = "none";
+	active = nslides - 1;
+	sl[active].style.display = "block";
+}
+
+function knavigator(e) {
+	var k = (window.event) ? event.keyCode : e.keyCode;
+	switch(k)
+	{
+		case 39:
+			next;
+			break;
+		case 32:
+			next;
+			break;
+		case 34:
+			next;
+			break;
+		case 74:
+			next;
+		case 69: // e
+         expandSlides(); break;
+	}
+
+	if ((k == 39 || k == 32 || k == 34 || k == 'j') && next != null)
+		next();
+	else if ((k == 37 || k == 33 || k == 'k') && prev != null)
+		prev();
+	else if (k == 36 && first != null)
+		first();
+	else if (k == 35 && last != null)
+		last();
+}
+
+function mnavigator(e) {
+	var x = (window.event) ? event.clientX : e.clientX;
+	if ((x < (screen.width * 0.5)) && prev != null)
+		prev();
+	if ((x > (screen.width * 0.5)) && next != null)
+		next();
+}
+
+window.onload = hidenav;
+document.onkeyup = knavigator;
+document.onclick = mnavigator;
+
+
+</script>
+</head>
+<body>
+
+<div class="section">
+
+<h1>A markdown-based presentations generator</h1>
+
+<p>By Jaime Lopez, <a href="&#109;&#97;&#105;&#x6C;t&#x6F;:&#106;&#97;&#x69;&#x6C;&#x6F;&#x70;&#64;&#x67;&#x6D;&#97;&#x69;l&#x2E;&#x63;&#x6F;&#109;">&#106;&#97;&#x69;&#x6C;&#x6F;&#x70;&#64;&#x67;&#x6D;&#97;&#x69;l&#x2E;&#x63;&#x6F;&#109;</a></p>
+
+<p>September, 2012</p>
+
+</div>
+<div class="section">
+
+<h2>The necessity</h2>
+
+<p>I like plain text.
+<a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>
+is a format definition to write documents in plain text.
+So, why not use plain text to generate presentations.</p>
+
+<p>The idea is not original. There are great tools to generate
+presentations from a Markdown text file. But I need something
+very simple, minimalist in extreme.</p>
+
+</div>
+<div class="section">
+
+<h2>The pathway</h2>
+
+<p>The process to generate presentations that I prefer:</p>
+
+<ul>
+<li>Write a plain text in Markdown format</li>
+<li>Separate each slide with "!"</li>
+<li>Generate one webpage for each slide</li>
+<li>Manage formats with a style page in CSS</li>
+<li>Add navigation support (no &amp; yes Javascript)</li>
+<li>Open in a browser, full screen mode</li>
+<li>Enjoy it!</li>
+</ul>
+
+</div>
+<div class="section" id="hola1">
+
+<h2>The solution</h2>
+
+<ul>
+<li><p>A <a href="README.md">text plain file</a> with your content.</p></li>
+<li><p><a href="mdshow.pl">mdshow.pl</a> - a Perl script to generate webpages for slides</p>
+
+<p><code>$ ./mdshow.pl README.md</code>  </p></li>
+<li><p><a href="mdshow.js">mdshow.js</a> - a Javascript code to add keyboard &amp; mouse driven support</p></li>
+<li><p><a href="style.css">style.css</a> - a CSS stylesheet</p></li>
+</ul>
+
+<p>And that's all. Here is it, in less than 100 code lines.</p>
+
+</div>
+<div class="section" id="hola2">
+
+<h2>How to move</h2>
+
+<p>Mouse:</p>
+
+<ul>
+<li><code>Click</code> on left side: previous slide</li>
+<li><code>Click</code> on right side: next slide</li>
+</ul>
+
+<p>Keyboard:</p>
+
+<ul>
+<li><code>Right</code>, <code>PgDn</code>, <code>Space</code>, <code>j</code>: next slide</li>
+<li><code>Left</code>, <code>PgUp</code>, <code>k</code>: previous slide</li>
+<li><code>Home</code>: First slide</li>
+<li><code>End</code>: Last slide</li>
+</ul>
+
+</div>
+<div class="section" id="hola3">
+
+<h2>Warnings</h2>
+
+<ul>
+<li>You need to have installed Perl and Markdown module in your computer to generate files. After that, just distribute your files.</li>
+<li>By the moment, I just had tested Javascript file in Firefox and Chrome.</li>
+<li>If you prefer something with more options or fancy, you are in the wrong place.</li>
+</ul>
+
+</div>
+</body>
+</html>

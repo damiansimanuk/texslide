@@ -1,0 +1,11 @@
+	== Rich table
+	===================================================================
+	Cell A	|| Here I have a paragraph.
+			|| 
+			|| And here another paragraph:
+			||
+			|| - With a alist
+			|| - and a sub list
+			|| - and so on
+			||
+	===================================================================

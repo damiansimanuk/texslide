@@ -1,0 +1,1183 @@
+
+                            ~SimTex v.0.6.5~
+                          ~~ Reference manual ~~
+                      -~ SimTex Reference Manual ~-
+
+
+
+[start Meta]
+
+	Abstract: SimTex is a structured text to XML processor that eases the
+	process of writing XML textual documents. SimTex offers a rich set of
+	non-intrusive markup to express the structure and semantics of your
+	documents, and generates an XML document that conforms to the OrchidéeNoire
+	XML application.
+
+	Authors:  Sébastien Pierre <sebastien@type-z.org>
+	Revision: 0.6.5
+	Language: EN
+
+	Creation: 2001-09-12
+	Last-mod: 2004-12-26
+
+	Keywords: Text processing, Orchidée Noire, structured document, XML.
+	Type:     Book (small)
+
+[end Meta]
+
+1. Introduction
+---------------
+
+	This document is the reference for the SimTex processor, it describes how a
+	typical SimTex document is structured and details the different structure
+	and semantic elements provided by the SimTex processor. This document is
+	targeted at people who want to have a complete overview of SimTex
+	features, want to start using SimTex without the additional help of the
+	user's guide, or already use SimTex but want to have a quick and
+	clear access to its possibilities.
+
+	The first part of this reference manual describes the *formatting
+	conventions* that allow to express the structure of your document, that is
+	sections, chapters, appendices, paragraphs and lists. The next part of the
+	document presents the different ways to express the various semantic
+	elements that can be put inside a SimTex document, such as emphasis,
+	references, quotes, acronyms, keywords and so on. The last part presents
+	the different extension features that are offered by SimTex to allow the
+	user to express his custom semantics through customized markup, as well as
+	advanced features such as targeting.
+
+1. SimTex processing basics
+===========================
+
+	Writing SimTex document is a rather easy task provided you have properly
+	understood the notions that are the foundation of SimTex interpretation of
+	your text. This section introduces the notions of block and inlines, the
+	influence of text indentation on SimTex interpretation, and eventually an
+	overview of SimTex interpretation mechanism : the parsing process.
+
+	Blocks and inlines
+	------------------
+
+		At the core of the SimTex processor is the separation of text elements
+		in two categories:
+
+		-	Block elements
+		-	Inline elements
+
+		Those who have experience with markup languages such as SGML, XML or
+		even HTML should have a notion of what blocks and inlines are. Block
+		elements (blocks for short) are parts of the text that express its
+		structure, and do not carry any specific semantic. A section containing
+		paragraphs would be a block, the paragraph being blocks as well.
+
+		Inline elements are elements that represent the text semantic, and are
+		always within a block element. For instance a word marked as
+		*emphasis* in a paragraph would be the inline, while the paragraph
+		would be the block element.
+
+
+	Indentation for structure
+	-------------------------
+
+		In SimTex *blocks are separated by empty lines*: starting a new
+		paragraph only implies leaving an empty line (a blank line) before
+		starting to write the next paragraph. However, this basic mechanism is
+		not sufficient to express the structure of blocks: it may be useful to
+		allow blocks to be expressed as contained by other blocks. For instance
+		sections contain paragraphs, but could also contain sections.
+
+		In this respect, SimTex uses the block *indentation* in addition to the
+		block type to determine its location in the document structure.
+		Indentation is computed by computing the average indentation of the
+		first 4 lines of a block.
+
+	The parsing process
+	-------------------
+
+		A basic understanding of how the SimTex processor works is a good thing
+		to better understand this document. This short sections provides a quick
+		overview of how SimTex processes its documents.
+
+		When feeding the SimTex processor with a text document, SimTex first
+		tries to identify the blocks: the initial text is segmented in blocks
+		by detecting empty lines as presented before, while also computing the
+		indentation for each of this blocks.
+
+		Once this initial segmentation is made, SimTex will try to identify the
+		blocks, that is to determine the type of the blocks, which can be
+		paragraphs, sections, etc. To do this, SimTex uses *block parsers*
+		which identify blocks they recognize and them parse these recognized
+		blocks. When block parsers parse their blocks, they can use *inline
+		parsers* that will try to recognize inlines within the block.
+
+		Each block parser creates a block object that is filled with text,
+		inline objects or other block objects.  Now that all blocks have been
+		identified and parsed, SimTex tries to reconstitute the structure of
+		the document by both using the block type information and its
+		indentation. The result is the construction of the final XML document
+		that will be written to a file or on the standard output.
+
+		This short description may be a little bit fuzzy ; this is not a
+		problem as things should clarify while reading the following sections.
+
+2. Expressing the document structure
+====================================
+
+	The previous sections has introduced the notion of blocks, inlines,
+	indentation, as well as an overview of the parsing process. This section
+	introduces the various elements that allow to express the structure of the
+	SimTex documents. These elements are paragraphs, chapters, sections,
+	appendices and eventually lists, which are halfway between blocks and
+	inlines.
+
+	1. Paragraphs
+	-------------
+
+		Writing a paragraph is conventionally equal to writing sentences close
+		to each other, without separating them by a vertical space. This is a
+		good point as SimTex recognizes its blocks using the same convention:
+		blocks are indeed paragraphs *by default*, unless a specific block
+		parser identifies the block as something else than a simple paragraph.
+
+		As paragraphs are separated by empty lines, SimTex offers a way to
+		express a new line (carriage return, line break, ...) by placing a pipe
+		(`|') character at the beginning of the line, with optional leading
+		spaces or tabs, as illustrated in the following example:
+
+		[start Example:title="Line break in paragraph", tag="EX-03"][start pre]
+		| ...metus blandit aliquam.
+		|
+		| Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
+		| turpis ac lectus. Morbi consequat, sapien et consequat blandit,
+		| sodales justo, pretium sollicitudin ipsum wisi id eros. Donec 
+		| velit.
+		| |
+		| Nam scelerisque volutpat lacus. Integer lorem ante, adipiscing a,
+		| convallis condimentum, dictum nec, ipsum. Nam pellentesque.
+		| Pellentesque gravida luctus sem. Praesent ante lacus, placerat ut,
+		| eget, lacus. Aenean eget lectus. Nam sed odio ac purus 
+		| Praesent vitae urna eu nibh tempus placerat. Maecenas
+		| vehicula et, consequat et, neque.
+		|
+		| Lorem ipsum...
+		[end pre][end Example]
+
+		Using the pipe character to simulate a new line can be used in all
+		block elements that accept new lines in their content. The only
+		exception to this are custom blocks, which will be presented later.
+
+
+	2. Sections
+	-----------
+
+		Sections provide a mean of grouping paragraphs altogether, allowing to
+		add more structure to your document. Whereas paragraphs can only
+		contain text, sections can contain a wide variety of elements, ranging
+		from figures, examples to paragraphs, and even sections. Chapters and
+		appendices, which will be presented below, are both specific kinds of
+		sections.
+
+		Anatomy of a section
+		--------------------
+
+		A section is marked up in SimTex by a !section heading!. A section
+		heading is constituted of:
+
+		- The section heading:
+		  One or more lines of text containing the text of the section heading
+		- The section numbering:
+		  A sequence of dot-separated numbers or roman letters that prefix the
+		  section title.
+		- The section heading decoration:
+		  Underlines the section title with underscores, equal signs or stars
+		  characters (`-', `_', `=', `*').
+
+		The section numbering can be omitted if the section decoration is
+		present, but both can be used at the same time. The section numbering
+		and the section heading decorations are used by SimTex section parser
+		to identify a section block. The following example shows different
+		possible sections:
+
+		[start Example:title="Underlined section heading"]
+		[start pre]
+		| ...aliquam erat volutpat.
+		|
+		| Underlined section heading
+		| ==========================
+		|
+		|
+		| 1. Numbered section heading
+		|
+		|   Etiam et wisi vitae dui consectetuer faucibus. Ut justo nibh,
+		|   varius eu, sollicitudin nec, fringilla sed, enim. Nam tempor
+		|   amet arcu. Nullam justo massa, posuere at, porta in, nonummy
+		|   Pellentesque mauris.
+		|
+		| 1.2. Numbered fancy underlined heading
+		| -*-*-*-*------------------------------
+	    |
+		|   In enim. Phasellus sed est ac purus rutrum elementum. Maecenas
+		|   congue metus. Nulla facilisi. Maecenas sed nulla. Aliquam 
+		|   rutrum. Ut porta. Suspendisse dolor. Vestibulum a wisi 
+		|   adipiscing imperdiet.Lorem
+		|
+		| Lorem ipsum...
+		[end pre]
+		[end Example]
+
+		We can notice from the above example that section heading decoration
+		can contain a mix of any allowed character. Also, the above example
+		may indicate that the actual values of the section numbering is
+		important. In fact, as it will be detailed below, the section number
+		values are actually ignored, because it is SimTex that will determine
+		the position of the section in the document structure. This frees users
+		from having to maintain section numbering in their documents (thought it
+		works well if the sections are properly numbered!).
+
+		Determine a section nesting
+		-----------------------------
+
+		!Section nesting! is the term for the position of the section within
+		the document structure. Section nesting allows to determine if a
+		section is a child, parent or sibling of the preceding sections. To
+		determine a section nesting, which is an integer value, SimTex uses the
+		following factors:
+
+			1) Section heading block indentation
+			2) Section numbering
+
+		The section heading block indentation is the one SimTex determines from
+		its indentation computation operation, the indentation is assigned to
+		the current section nesting.
+
+		The section numbering, if present, will be then used to increase
+		(and only increase) the section nesting. The section numbering
+		is converted to a value (*depth*) that represents the number of
+		elements in the number prefix. For instance `1.' would have a depth
+		of 1, `1.1' would have a depth of 2, just as `1.10', `1.1.I'
+		would have a depth of three, etc. This depth is then added to the
+		section nesting ; if there is no section numbering, the section nesting
+		will be equal to the section heading block indentation.
+
+		During the constructions of the document structures, section headings
+		are taken in document order and compared to the previous section
+		heading in the following manner:
+
+		- The section nesting value of the current section is the same as the
+		  preceding one. In this case the current section is a sibling of the
+		  preceding section.
+
+		- The section nesting of the current section is greater than
+		  the preceding one. In this case the current section is a child
+		  section of the preceding one.
+
+		- The section nesting of the current section is smaller than
+		  the preceding one. The preceding section could be a child or a
+		  grand-child of a sibling. In this case SimTex walks back the list of
+		  ancestor sections until an ancestor has a smaller section nesting
+		  than the current one. This ancestor will be the parent of the current
+		  section.
+
+		The nesting evaluation algorithm allows a lot of flexibility for
+		positioning sections, allowing to choose between block indentation and
+		numbering prefix, while also allowing small errors in section
+		indentations, as shown in the following example:
+
+		[start Example:title="Flexibility in section heading indentation"]
+		[start pre]
+		| ... aliquam orci id urna.
+		|
+		| Parent section
+		| --------------
+		|
+		|    Maecenas erat. Vestibulum molestie augue sit amet lorem. 
+		|    Migula quam, fermentum et, cursus sed, dictum sed, odio.
+		|    Donec dapibus pede. Fusce non turpis et sem pharetra iaculis.
+		|
+		|    Child section
+		|    --------------
+		|
+		|    Nullam eleifend pede id tortor. Pellentesque ultrices
+		|    nisl. Etiam eu ligula et quam eleifend lobortis. Integer eget.
+		|    Cum sociis natoque penatibus et magnis dis parturient montes,
+		|    nascetur ridiculus mus.
+		|
+		|  Child section
+		|  -------------
+		|
+		|    Suspendisse potenti. Aenean nisl. Integer sit amet elit.
+		|    Integer bibendum. Phasellus lacinia, tortor in blandit rhoncus, 
+		|    dui diam congue neque, ac fermentum urna erat id eros. Donec
+		|    aliquam orci id urna.
+		|
+		|    Quisque vulputate, leo vitae pharetra fringilla, orci metus
+		|    lobortis lorem, sed blandit purus pede non erat. Ut lobortis
+		|    est. Nulla dignissim, odio vel ullamcorper ornare, ante elit
+		|    erat, non fermentum metus orci eget augue.
+		[end pre]
+		[end Example]
+
+		We see here that the second child section has a lower indentation as
+		its previous sibling section, but as its nesting was still superior as
+		the parent, this had no effect. There is also something else to note
+		about this example: it is not possible to add a paragraph to a parent
+		section. When a new section is declared, all the following text will
+		belong to it until another section is declared, whether child or
+		sibling.
+
+		Chapters and appendices
+		-----------------------
+
+		As mentioned earlier, chapters and appendices are two specific kinds
+		of sections. Chapters are used in large documents to contain sections,
+		which is typically the case for books. Appendices are used to contain
+		whole documents, that is possibly chapters, and surely sections and
+		paragraphs, etc.
+
+		Chapters and appendices are declared in SimTex just as a normal
+		section, except that the *section numbering is required*. SimTex do
+		indeed determine whether a section is a chapter or an appendix by
+		looking at its optional numbering prefix.
+
+		To specify that a section heading has to be considered as a chapter
+		heading the number prefix has to start with at least one *roman
+		number*, such as `I', `II', `IV', `XI', etc. which can be
+		combined with either numbers or letters (e.g. "I.", "I.1", "XI.X.2",
+		etc).
+
+		To specify that a section heading is an appendix heading the number
+		prefix has to start with an `A' letter, optionally followed by any
+		combination of numbers or letters (e.g "A1.", "A.2", etc).
+
+
+	3. Lists
+	--------
+
+		Lists have a special place in the elements that express the structure
+		of a SimTex document: they are halfway between blocks and inlines. They
+		are blocks because they can contain paragraphs, but are also inlines
+		because they can be nested into paragraphs.
+
+		SimTex offer two list types:
+
+		- Lists composed of list item. These lists are composed of list items
+		  that can also contain nested lists.
+
+		- Lists composed of terms and their definition. These list are also
+		  called !definitions list!, because they contain only definitions of
+		  term. They cannot contain nested definition lists, but can contain
+		  nested lists.
+
+		Both types are composed of:
+
+		1) An optional !list heading!
+		2) List items are
+			- composed of optional !list item heading!, or required definition
+			  term for definition lists.
+			- composed of the !list item body!. This body can contain
+			  everything a paragraph can contain, even nested lists.
+
+		We will now present the list-specific formatting rules, and provide
+		some examples of both types.
+
+		Specific formatting rules
+		-------------------------
+
+		List items follow the same rules as other blocks, which means that an empty
+		line will be interpreted as the end of the list item. As a consequence,
+		a list item can not contain more than one paragraph, but this paragraph can
+		be segmented using newlines (represented by a `|' character standing
+		alone on a new line).
+
+		On the other hand list items can be aggregated without leaving empty lines
+		between them. This actually means that you are free to leave empty lines or
+		not between each list item -- this flexibility allows you to present your
+		lists as you like.
+
+		Note that if you write a paragraph containing a list, *without
+		separating the list from the paragraph with an empty line*, the list
+		will not be recognised.
+
+		Anatomy of lists
+		----------------
+
+		The aforementioned optional !list heading! is in fact a sentence that
+		ends with double colon followed by a newline. It should usually be
+		standing alone in a paragraph or could also be mixed with the other
+		paragraph data.
+
+		List item headings are detected using the first line of the list item.
+		If this first line ends with a colon and a newline, then the line is the line item
+		heading. If the first line ends with a slash and a newline, then the
+		line is a definition item. All following text is considered as the list
+		item body.
+
+		[start Example:title="Definition lists and standard list"][start pre]
+		|
+		|	Here is a definition list:
+		|
+		|		- Definition one/
+		|		  Lorem ipsum
+		|		- Definition two/
+		|		  Lorem ipsum
+		|
+		|	Here is a standard list:
+		|
+		|		- List item heading one:
+		|		  Lorem ipsum
+		|		- List item heading two:
+		|		  Lorem ipsum
+		|
+		[end pre][end Example]
+
+		A *list item* is identified by a starting dash or by a
+		single digit or letter followed by a closed parenthesis (a slash is also allowed for digits
+		and letter). Using a dash will produce a dashed list, using `*)' will produce a bullet list, using digits
+		will produce a numbered list and using letters will of course produce a
+		lettered list.
+
+		Here are examples of lists:
+
+		[start Example:title="Basic lists"][start pre]
+		|	Here is a paragraph followed by a lettered list items:
+		|
+		|	a)Item one
+		|	b)Item two
+		|
+		|	Here is a paragraph followed by dashed list items with heading:
+		|
+		|	- Item heading one/
+		|	  Item content
+		|	- Item heading two/
+		|	  Item content
+		[end pre][end Example]
+
+		[start Example:title="Advanced lists"][start pre]
+		|	Here is a more advanced lists, with empty-line separated list
+		|   items, multi-line list item body and nested lists.
+		|
+		|		*)Bullet item one
+		|
+		|		*)Bullet item two
+		|		  |
+		|		  Which body is separated by a newline and contains a nested
+		|		  list. This list also has a heading:
+		|
+		|			- Dashed list item one
+		|
+		|			- Dashed list item two
+		|
+		|			- Dashed list item three
+		|				1) With nested numbered item
+		|				2) And another
+		|
+		|			- Dashed list item four
+		|
+		[end pre][end Example]
+
+		As presented before, the following example would not be ok:
+
+		[start Example:title="Bad list example"][start pre]
+		|	Here is a pargraph that contains a list:
+		|		- Here is a list item within a paragraph
+		|		- Here is another list item within the paragraph
+		[end pre][end Example]
+
+		the above example should be written with an empty newline separating
+		the list from the paragraph:
+
+		[start Example:title="Bad list example"][start pre]
+		|	Here is a pargraph that contains a list:
+		|
+		|		- Here is a list item within a paragraph
+		|		- Here is another list item within the paragraph
+		[end pre][end Example]
+
+		As illustrated by the previous examples, you can write nested lists
+		inside your lists. The *nesting* of the lists is this time only based
+		on the physical indentation of the list item, as opposed to the section
+		nesting mechanism.
+
+		Be careful not to mix in a list different items of the different types,
+		like dashes and numbers. The result would be the issuing of warnings
+		plus the conversion of all list items to dashed lists. In the same
+		perspective, definition items should not be mixed with ''normal'' list
+		items.
+
+	4. Tables
+	---------
+	
+		Tables are important elements of a document, and belong half-way between
+		the document structure and its content. As tables deserve a section of
+		their own, we preferred to talk about the topic in the document structure
+		section.
+		
+		With SimTex, tables can be represented in text format, and will then be
+		converted to an XML representation. Here is an example of a SimTex table
+		
+		[start Example:title="Horizontal table example"]
+		[start pre]
+		|
+		|     Type    || Name          || Markup               
+		|    =========||===============||======================
+		|     Content || Emphasis      || *emphasis*           
+		|    ---------||---------------||----------------------
+		|     Content || Preformatted  || `preformatted'       
+		| 
+		[end pre]
+		[end Example]
+		
+		As you can notice, columns are separated by two
+		pipes `||', rows are separated by dashes `- ' or equal signs `='. The
+		row which is underlined by equal signs will be considered as the header
+		row.
+		
+		[start Example:title="Vertical table example"]
+		[start pre]
+		|
+		|     Type    || Name          || Markup               
+		|    =========||---------------||----------------------
+		|     Name    || Emphasis      || *emphasis*           
+		|    =========||---------------||----------------------
+		|     Markup  || Preformatted  || `preformatted'       
+		| 
+		[end pre]
+		[end Example]
+		
+		You see that some cells contain text with SimTex markup. In fact,
+		each cell is interpreted and parsed as any other block. Cells can
+		also span one or more lines, as shown in the following example:
+
+		[start Example:title="Multi-line cells"]
+		[start pre]
+		|
+		|     Software      || Description
+		|    ===============||===============================================
+		|     SimTex        || A structured text processor which generates
+		|                   || XML files conforming to the OrchidéeNoire
+		|                   || DTD.           
+		|    ---------------||-----------------------------------------------
+		|     OrchidéeNoire || An XML DTD for rich text documents, similar
+		|                   || to DocBook. It comes with a complete tool
+		|                   || chain and customizable stylesheets to generate
+		|                   || HTML, PostScript and PDF.
+		|
+		[end pre]
+		[end Example]
+		
+		As you can see, SimTex tables are quite simple to manage. However, in
+		the current version of SimTex, they are not as powerful as HTML tables.
+		If you would like to have more complex tables, I would suggest that you
+		use a dedicated spreadsheet program and export the tables as EPS, which
+		can be later incorporated as figures.
+		
+3. Expressing the document content
+==================================
+
+	The preceding section has presented the various elements that help express
+	the document structure. It is now time to have a glimpse at more common
+	elements that can be used to express all the richness of a document
+	content.
+
+	The OrchidéeNoire XML application identifies the following groups as part
+	of the document content:
+
+	#NOTE: This was copied from the ON application text
+
+		- Textual content elements/
+		  such as emphasis, terms, acronyms, literals. Content elements
+		  are contained in a paragraph and allow to markup words.
+
+		- Semantic content elements/
+		  such as keywords, terms, acronyms, quotes or citations, they
+		  express a portion of the text with a particular semantic meaning.
+
+		- Linking content elements/
+		  such as tags, references, footnote, email or URI, they allow to
+		  link the document either internally or with external resources.
+
+		- Annotation content elements/
+		  such as note, footnote or endnote, they simply allow to mark
+		  different types of annotation that may be absent from the final
+		  document version.
+
+		- Media content elements/
+		  such as images, sounds or video, they allow to embed media within
+		  the document.
+
+	SimTex does not define specific markup for all of the OrchidéeNoire
+	elements, but tries to offer shorthands for most of them.
+
+	Textual content elements
+	========================
+
+		- Emphasis/
+			Emphasis can be marked-up by surrounding an element with stars
+			(`*'). It has to be used when you want to stress a word or a
+			sentence. Emphasis is usually displayed as italic text.
+			|
+			Example: [start pre]here is an *emphasized* word[end pre]
+
+		- Strong/
+			Strong, which means that a word or a phrase is really important can be
+			marked-up by surrounding an element with two stars (`**'). Strong
+			is rarely used, but may be sometimes useful ; it is generally
+			represented in bold -- so the difference with *emphasis* is mainly
+			graphic.
+			|
+			Example: [start pre]here is a **strong word**[end pre]
+
+		- Code/
+			Code allows to express that words or sentences contain do not have
+			a textual meaning an represent a code, which is mostly used for all
+			computer-science related elements, such as function names, classes,
+			and so on. Code elements are marked up by surrounding them is ``'
+			and [start code]'[end code] characters. Note that spaces and
+			tabs in code elements are absorbed, which is not the case with
+			preformatted elements.
+			|
+			Example: [start pre]here is a `code' element[end pre]
+
+		- Preformatted/
+			Preformatted text is the equivalent of code, but spaces, tabs and
+			line breaks are preserved as presented in the document. SimTex does
+			not offer any specific markup for preformatted, so you have to use
+			{#CUSTOM_TAGS:custom tags} as presented later. Note that you can
+			use pipes `|') to place the beginning of a new line when your
+			preformatted text spans more than one line.
+			|
+			Example 1: [start pre][start pre]Here is my preformatted text[end pre][end pre]
+			|
+			Example 2: Here is a preformatted text that spans more than one
+			line\n
+			[start pre]
+			|[start pre]
+			|     Nullam eleifend pede id tortor. Pellentesque ultrices fringilla
+			|     nisl. Etiam eu ligula et quam eleifend lobortis. Integer eget turpis.
+			|     Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+			|    ridiculus mus.
+			|[end pre]
+			[end pre]
+
+		- Breaks and newlines/
+			Breaks allow to express a break within a paragraphs. Paragraphs
+			breaks can be rendered differently than paragraphs gaps. Breaks can
+			be marked by a line simply containing one pipe (`|').
+			|
+			On the other hand, newlines simply indicate that the line is
+			finished after the newline symbol, and the following text has to
+			start on a new line, without having a blank line between the last
+			and new lines. Newlines are indicated by a `\n'.
+			|
+			Example 1: Here is a paragraph with a break\n
+			[start pre]
+			| Nullam eleifend pede id tortor. Pellentesque ultrices fringilla
+			| nisl. Etiam eu ligula et quam eleifend lobortis.
+			| |
+			| Integer eget turpis. Cum sociis natoque penatibus et magnis dis
+			| parturient montes.
+			[end pre]
+			|
+			Example 2:
+			[start code]Here is a line ended by a newline \n Here starts a new
+			line[end code]
+
+		- Longdash/
+			The longdash character is used to juxtapose two sentences that
+			would not like to be separated by a colon. Longdashes are simply
+			represented by two normal dashes like this `--'.
+			|
+			Example: [start pre]Here is a -- long dash[end pre]
+
+		- Arrows/
+			SimTex also interprets arrows such as <--, --> and <-->. They are
+			respectively written as `<--', `-->' and `<-->'.
+			|
+			Example: [start pre]This --> that[end pre],
+			[start pre]pouet <--> pouet[end pre]
+
+		- Dots/
+			A dot sequence is also interpreted by SimTex into a special
+			textual element. A dot sequence is interpreted like this ..., and
+			is naturally expressed by a sequence of three dots `...'.
+
+	Semantic content elements
+	=========================
+
+		- Keywords/
+			Keywords are words that have a particular importance in your text
+			as they deeply reflect the content of either your whole text, or a
+			particular part of your document. Keywords are marked by
+			surrounding your words with exclamation marks (`!').
+			|
+			Example: [start pre]Here is a !keyword![end pre]
+
+		- Term and names/
+			A term is a word that is part of the vocabulary specific to your
+			text. Names represent companies, individuals, technologies, or anything
+			that is not actually a word. The difference between keywords and terms
+			is that keywords
+			stress particular meaning of your document, without being part of
+			its vocabulary, whereas terms make up your document *jargon*. Terms
+			are marked by surrounding your words with single quotes ([start code]'[end code]).
+			Terms usually appear, or are better defined in your document glossary.
+			|
+			Example: [start pre]Here is a 'term'[end pre]
+
+		- Acronyms/
+			An acronym is recognized when it has the form
+			`_ABC_ (:Axxxxx Bxxxxx Cxxxx:REF)', where `ABC' can be any letter
+			combination (the acronym can of course have more or less than three
+			letters!), followed by the explanation of the letters between
+			parentheses. The leading colon is required. The last part within
+			the parentheses, which is `:REF' is optional. The `REF' should be
+			replaced by a reference, such as a bibliographic reference or an
+			URI -- references will be detailed later. Note that the acronym and
+			its detailed can be inversed, as illustrated in the following
+			examples.
+			|
+			Example 1: [start pre]Here is _AA_ (:An Acronym)[end pre]
+			|
+			Example 2: [start pre]Here is _An Acronym_ (:AA:$REF) with a reference[end pre]
+
+		- Citation/
+			A citation from somebody is specified by surrounding the citation by
+			`>>' and `<<', and then giving the details on the citation between
+			parentheses, with opened parenthesis prefixed by a colon (`:').
+			These details begin with the comma-separated list of authors, then
+			the citation date (which can be empty), and eventually the optional
+			reference.
+			|
+			Example 1: A citation with all information:\n
+			[start pre]>>Lorem Ipsum<< (:Author, Author, Author:1999-12-31:#NEWYEAR)>[end pre]
+			|
+			Example 2: A citation with only authors\n
+			[start pre]>>Lorem Ipsum<< (:Author, Author, Author)[end pre]
+			|
+			Example 3: A citation with only authors and reference\n
+			[start pre]>>Lorem Ipsum<< (:Author, Author, Author:$AREF)[end pre]
+
+		- Quote/
+			A quote is the same as a citation, excepted that it comes from a
+			document, and not from somebody. Quote markup follows the same rules
+			as citations, excepted that you start with `<<' and end with `>>',
+			and that the first element of the parenthesis is the document,
+			followed by the authors (which are optional as the rest), the year
+			and the reference.
+			|
+			Example: [start pre]<<Lorem Ipsum>> (:Document:Authors:Year:ref)[end pre]
+
+		- Quoted term/
+			A quoted term is a term that your put between ''quotes''. Usually,
+			you quote a term when the term is used in an unusual context, or in
+			a foreign language. To express that a term is quoted, simply surround it by a pairs of
+			single quote ([start code]''[end code]). Note that this differens from
+			a simply quote word (like this is "quoted"), because a word is not a term.
+			|
+			Example: [start code]Here is a ''quoted term''[end code]
+
+		- Document/
+			Documents allow to mark that you are referring to a document.
+			A document is identified by a title surrounded by leading double
+			backquotes ([start code]``[end code]) and trailing quotes ([start
+			code]''[end code]). It is followed by an
+			optional parentheses-enclosed sequence of type, details and
+			references that begins with a colon (`:') like quotes, citations,
+			or acronyms.
+			|
+			Example:[start code]``Document title'' (:book:a really nice
+			book:$MYBOOK)[end code], or [start code]``SimTex reference manual''
+			(:::<http://projects.type-z.org/simtex)[end code].
+
+#FIXME: DATES ARE NOT SUPPORTED IN SIMTEX, YET
+#		- Dates/
+#			Dates are expressed as a combination of year, months (in text) and
+#			day. Months are expressed in text ("Feb" or "February", "Mar" or
+#			"March", etc) in order to be able to discriminate with the day,
+#			note also that years are expressed as 4 digits (1999, 2003, or
+#			0001). For all other particular date needs, you can use custom
+#			tags, attributes are `year', `month', `day', `minute'
+#			|
+#			Example 1: `Here is the 14th July 14-Jul-2003, 2003-14-Jul,
+#			Jul-2003-14'\n
+#			Example 2: `Here is the same date with custom tags
+#			`[date:month="7" day="14" year="2003"]'
+
+	Notes
+	=====
+	
+		- Footnotes/
+			A footnote is simply one or more sentences that will appear at the
+			bottom of a page. To express that a portion of text should appear
+			in a footnote, surround it with parentheses and `..'.
+			|
+			Example: `Blah blah..(Here is a footnote)..'
+	
+	Linking text content
+	====================
+
+		- Tag/
+			A tag allows to *mark* a specific location in the text to which
+			you can refer later. Targets consist in a sequence of alphanumeric
+			characters (including dash and underscore) enclosed by brackets.
+			To tag a section, simply put the anchor on a single
+			indented line after the section heading, just as you would do for a
+			standard paragraph.Tags allow to mark the *current block element*,
+			which means that a block element (such as a pargraph can only contain
+			a single tag.
+			|
+			Example 1: [start pre]{MY_TAG} tags the current block[end pre]\n
+			Example 2: A tagged section:\n
+			[start pre]
+			|
+			| {SECTION_TAG} Here is my section
+			| --------------------------------
+			|
+			[end pre]
+
+
+		- Reference/
+			{REFERENCES}References allow to link the current document to various targets,
+			including tags (which makes them cross-references), bibliographic
+			element, URIs and email. Reference are marked as
+			`{REF:TEXT}' where reference is the reference item, and text is the
+			optional text to which the reference is attached. The `REF' part
+			can be:
+				- a cross reference, in which case it start with a `#'
+				  followed by the target tag name
+				- a bibliographic reference, in which case it starts with a `$'
+				  followed by the target bibliographic entry
+				- an URI, in which case the reference is enclosed in `<; and
+				  [start code]>[end code].
+				- an email, which is simply a particular case of the URI
+			The optional `TEXT' part of the reference is a text in which the
+			substring `#' will be automatically replaced by the number of the
+			item referenced in the document. This is particularly useful to
+			reference sections, tables and figures. The numbering scheme is
+			dependent on the stylesheet you will use. In case the substring
+			`p#' is found, the page number where the element appears will be
+			used[start footnote]Note that this should be replaced by number in
+			non-paginated outputs, such as HTML[end footnote]
+			|
+			Example 1: [start pre]{#MY_TAG}[end pre]\n
+			Example 2: [start pre]{#FIGURE:figure that appears page p#}[end pre]\n
+			Example 3: [start pre]{$LOREM00:Lorem Ipsum>}[end pre]\n
+			Example 4: [start pre]{<mail@type-z.org>:E-Mail me!}[end pre]
+
+
+	Custom blocks and inlines
+	=========================
+
+		Custom tags are a way to insert markup inside a SimTex document. As SimTex
+		produces XML, you can use tailored XSL stylesheet to convert SimTex
+		output to other formats such as DocBook, Texinfo, or any other format.
+		Using custom tags allow you to markup up elements within your document
+		for which there is no dedicated SimTex markup.
+
+		Custom tags are very close to the well known HTML or XML tags in the sense
+		that you have opening and closing tags, and that they can have attributes.
+		SimTex tags are slightly longer to write than XML ones, but are more
+		readable, and thanks god you don't have to use them often!
+
+		SimTex has two types of tags:
+
+		- Empty tags/
+		  Which have the form
+		  [start code]{|[tag_name:attr1='value1', attr2='value2'...]|}[end
+		  code], where *tag_name* is
+		  of course the name of your tag, and then follows a colon (or space) that
+		  delimits the name from the attributes list. Double quotes can be used
+		  for the attributes, and single or double quotes can be escaped using
+		  backslash.
+
+		- Opened tags/
+		  They have the form
+		  [start code]{|[start tagName:attr1='value1', attr2='value2'...]|}[end
+		  code]
+		  tag and `[end tagName]'. The syntax is the same as for empty tags
+		  except the leading `start'  and trailing `end' prefixes. The
+		  attributes are optional and in this case you can safely ignore the
+		  colon and what follows.
+
+		You can use custom tags when you want to create a block or inline that
+		has no markup in SimTex, or when it is inconvenient to use SimTex
+		markup (eg. tables). Custom tags are directly translated to XML, so you
+		can add any block or inline defined in the {$ON:OrchidéeNoire} schema,
+		which means that you simply have to read the OrchidéeNoire
+		documentation to have an idea of what custom tags can be used, and how
+		they will be rendered by OrchidéeNoire in your output documents.
+
+	Escaping SimTex markup
+	======================
+
+	As any embedded language, SimTex provides escaping mechanisms. It is sometimes
+	(actually quite rarely) required to put some characters that should not be
+	interpreted by SimTex, this is where escaping is useful. SimTex also
+	allows to put comments within your text, these comments will simply be
+	ignored by SimTex when processing the source document.
+
+		- Escaped text/
+			Many text elements are going to be presented, but you may sometimes
+			want SimTex to ignore the processing of a string. To do so, you
+			simply have to surround your text by an opening brace and a pipe
+			(`{|'), followed by a pipe and closing brace (`|}'). The containing
+			text will not be processed by SimTex.
+			|
+			Example: [start pre]This *text* is not escaped, {|this *text* is|}[end pre]
+
+		- Comments/
+			Comments are recognized by SimTex when a line is encountered with
+			leading zero or more spaces followed by a sharp (`#').  It may
+			sometimes be useful to use them, but they will be ignored in the
+			output XML file.
+			|
+			Example: [start pre] #Here is a comment line[end pre]\n
+			It is important to notice that a comment is only a *single line*.
+
+4. Advanced document usage
+==========================
+
+	We have presented so far the different way to express the structure and
+	semantics of your document. SimTex also offers more advanced capabilities
+	such as *meta-information* and *targeting*. We will detail both
+	capabilities in the following sections.
+
+	1. Document meta-information
+	----------------------------
+
+	Each SimTex documment can have a section dedicated to *meta information*.
+	Document meta information gathers information such as authors, abstract,
+	keywords, revision number, etc.
+
+	To add meta information to your SimTex document, you have to create a
+	`Meta' block, preferably after your document title:
+
+	[start Example:name="Meta information section"]
+	[start pre]
+	|    ~ Document title ~
+	|
+	|[start Meta]
+	|
+	| Author:   Sébastien Pierre <sebastien@type-z.org>
+	| Revision: 1.0.0
+	| Keywords: SimTex, meta information.
+	|
+	| Abstract: This document shows how to add meta-information to
+	| an existing SimTex document.
+	|[end Meta]
+	[end pre]
+	[end Example]
+
+	The content of a `Meta' block (note the uppercase `M') is not marked-up as
+	the rest of a SimTex document. A meta block is separated in fields and
+	their content. A field is simply a line that starts with one of the
+	available fields (see below) and a colon which separates the field and its
+	content. The content flows until a new field is encountered.
+
+	In this respect, you should avoid to have a single word followed by a colon
+	in a multi-lined field content:
+
+	[start Example:title="Misleading field content"]
+	[start pre]
+	| Abstract: Here is a multi-lined field content which has start with a
+	| field: followed by a colon, which gets interpreted as a new field.
+	[end pre]
+	[end Example]
+
+	The above example could be avoided by simply putting two words instead of
+	one before the colon:
+
+	[start Example:title="Proper field content"]
+	[start pre]
+	| Abstract: Here is a multi-lined field content which has start with
+	| a field: followed by a colon, which gets interpreted as a new field.
+	[end pre]
+	[end Example]
+
+	Each *available field* has its own syntax, here is the detailed list of
+	fields:
+
+	- `Abstract'/
+	  Contains the document abstract. This field can contain any SimTex markup.
+	- `Acknowledgements'/
+	  Contains the document acknowledgements. This field can contain any SimTex
+	  markup.
+	- `Author' or `Authors'/
+	  Contains either a single author or a list of authors separated by commas
+	  and optionally ending with a point. Email adresses can follow the author
+	  name, provided they are enclosed in `<' and `>'.
+	  |
+	  Example: `Author: Sébastien Pierre <sebastien@type-z.org>'
+	  |
+	  Example: `Authors: Will Self, Poppy Z. Brite.'
+	- `Creation'/
+	   Indicates the creation date for this document. The date is formatted as
+	   `YYYY-MM-DD'.
+	- `Keywords'/
+	   Contains a comma-separated list of keywords, than may end with a dot.
+	- `Language'/
+	   One of `EN', `US', `UK' or `FR'. Specifies the language in which the
+	   document is written.
+	- `Last-mod'/
+	   Indicates the creation date for this document. The date is formatted as
+	   `YYYY-MM-DD'.
+	- `Organisation' or `Organization'/
+	   Specifies the organisation in which the document was produced. This
+	   field accepts any SimTex markup as content.
+	- `Revision'/
+	   Describes the current document revision. This is a dot-separated
+	   sequence of numbers or letters (`1.0', `1.1.a', etc)
+	- 'Type'/
+	   Defines the document type. This field can take values defined in the
+	   OrchidéeNoire DTD, such as 'article', 'technical', 'book', etc. Each
+	   type can be followed by a subtype enclosed in parens such as `(small)'
+	   indicating a variant of the selected type. Please refer to the
+	   OrchidéeNoire manual for more information on this.
+	
+	Use meta-information as often as you can, as it will guarantee that your
+	documents gets properly indexed and referenced in your information system.
+
+	2. OrchidéeNoire markup                                        {ONMARKUP}
+	-----------------------
+	
+	SimTex was designed as a text front-end for the {$ON:OrchidéeNoire}
+	document processing toolchain. 'OrchideéNoire' defines a set of XML elements
+	which are declared in its DTD. With SimTex custom markup system, you can
+	directly include OrchidéeNoire elements which do not have a shorthand
+	in SimTex.
+	
+	To use an OrchidéeNoire element inside a SimTex document, simply use the
+	custom markups:
+	
+	[start Example:title="OrchidéeNoire elements in SimTex"]
+	[start pre]
+	|
+	| [start Example:title="Here is the title of my example"]
+	| Hello, I am an example.
+	| [end Example]
+	|
+	[end pre]
+	[end Example]
+	
+	In the above example, we used the `pre' and `Example' elements of the
+	OrchidéeNoire DTD. If you want to have the full list of available elements,
+	you should have a look at the OrchidéeNoire DTD, however, here is a quick
+	list of most common ones:
+	
+	- `Example'/
+	   Declares an example.
+	- `Figure'/
+	   Allows to insert a figure in the current document.
+	- `pre'/
+	   Stands for preformatted text. 
+	
+	3. Bibliographic references                                      {BIBREF}
+	---------------------------
+	
+	SimTex allows to declare a set of bibliographic references that you can
+	refer to with {#REFERENCES:reference tags}. Reference entries can be placed
+	anywhere in the document, but it is suggested to put them at the document end.
+	
+	Here is an example of references:
+	
+	[start pre]
+	|
+	|	.. SIMTEX:title="SimTex Reference Manual"
+	|	author="Sébastien Pierre", date="2004"
+	|	type="manual"
+	|	url="http://projects.type-z.org/simtex/reference.pdf"
+	|
+	|	.. ON:title="OrchidéeNoire Reference Manual"
+	|	author="Sébastien Pierre", date="2004"
+	|	type="manual"
+	|	url="http://projects.type-z.org/on/reference.pdf"
+	|
+	[end pre]
+	
+	We see that a reference is simply a collection of |reference entries|. Entries
+	are, like any other SimTex element, separated by newlines. A |reference entry|
+	starts with two dots and a space (`.. '), followed by the |entry id|. This
+	identifier is a sequence of digits or letters which can later be referenced
+	by {#REFERENCES:bilbiographic reference tags}.
+	
+	The |entry id| is followed by a a colon indicating that the rest of the block
+	contains the |entry attributes|. Each attribute name is expressed as a
+	case-insensitive sequence of letters, followed by an `=' and the the attribute
+	value enclose in double quotes.
+	
+	Entries have a set of mandatory attributes, which are basically `title' and
+	'author', but you can fill the following attributes:
+	
+	- `type'/
+	  Indicates the type of document. Supported values are `report', `thesis',
+	  'manual', 'book', but you can specifiy whatever you want.
+	- `date'/
+	  The date at which the document was written, or published, formatted as
+	  YYYY-MM-DD, with day and month being optional.
+	- `url'/
+	   Indicates an URL where the document, or some information on the document
+	   can be found.
+	- `institution' or `organization'/
+	   Indicates the insitution or organisation that originated the document.
+	
+	
+	4. Targeting                                                  {TARGETING}
+	------------
+
+	Targeting allows you to write *conditional* documents. Conditional
+	documents allow to *target* specific parts of your documents to a specific
+	*profile*. This is particularly useful when you write a document that has
+	portions that should be only visible to people inside of an organization,
+	and some that should not. Another case would be to adapt the content to the
+	type of reader, for instance some parts may not be understandable for a
+	novice, whereas some other parts would be boring for an expert. This is
+	what targets enable you to do.
+
+	A *target specifier* is composed of a comma-separated list of *targets*.
+	Each *target* can be prefixed with a optional plus or minus sign in  order
+	to specify the targets for the rest of the document.
+
+	For example `[> -novice, expert]' will specify that the following content
+	will not be addressed to novices, but will be addressed to experts.
+
+		Applying targets
+		================
+
+		Targeting applies hierarchically. This basically means that a *target
+		specifier* is only valid for all the children of the current structural
+		element, but not for its parent. More precisely this means that putting
+		a target specifier inside a nested section will affect the entire
+		content of the nested section, but not its parent.
+
+		On the other hand, target specifiers are inherited. This means that
+		putting a target specifier like `[>novice]' at the beginning of the
+		document will make every element targeted at novice, unless specified
+		by another target
+		specifier.
+
+		The `all` target
+		================
+
+		To disable the `novice' target anywhere in the document the simplest
+		thing is to use `-novice'. In case you want to disable *all* targeting
+		information for a specific element you can use the `all' target.
+
+		By default the document is targeted at `all', supposing you want a
+		section to be only targeted at a specific role you can use `[> -all,
+		my_target]'.
+
+		Be **careful** when you use the `-all', because even if you specify a
+		`+all' in a child it will be ignored, as the parent has `-all'. The
+		rule is that a *child cannot override a parent's target disabling*.
+
+
+
+
+..	ON:title="OrchidéeNoire -- a structured, rich text XML application"
+	author="Sébastien Pierre"
+	type="manual"
+	date="2003"
+	url="http://projects.type-z.org/on"
+
+
+# EOF

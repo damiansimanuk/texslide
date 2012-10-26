@@ -1,0 +1,13 @@
+
+  Notes are actually _annotated blocks_, which are blocks surrounded by an
+  annotation (here, the annotation is `Note`). You can use many other
+  annotations (such as  `Example`, `Use case`, etc..), as with annotations
+  will be translated to a lower-case class attribute in your resulting
+  HTML document. So you simply have to add the styles you want in your CSS
+  stylesheet to support more annotations blocks.
+
+      Note ________________________________________________________________
+
+      As with lists, _indentation is primordial_. Your note block should be
+      more indented than the parent paragraph. All paragraphs with the same
+      indentation level as the note will be considered part of the note.

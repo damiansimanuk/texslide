@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Remember these escape chars in XML
+&lt; 	< 	less than
+&gt; 	> 	greater than
+&amp; 	& 	ampersand 
+&apos; 	' 	apostrophe
+&quot; 	" 	quotation mark
+ -->
+<snip>
+
+<entry>
+<trigger id="rest">link</trigger>
+<description>A link</description>
+<snippet>[${1:Adress}|${2:Description}] $0</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">bold</trigger>
+<description>Bolded text</description>
+<snippet>**${1:Bolded}** $0</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">ita</trigger>
+<description>Italic Text</description>
+<snippet>//${1:Italic}// $0</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">del</trigger>
+<description>Deleted Text</description>
+<snippet>--${1:deleted}-- $0</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">under</trigger>
+<description>Underlined Text</description>
+<snippet>__${1:underlined}__ $0</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">mono</trigger>
+<description>Monospaced</description>
+<snippet>{{${1:Monospaced}}} $0</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">line</trigger>
+<description>Horizontal line</description>
+<snippet>-----
+
+</snippet>
+</entry>
+
+
+<entry>
+<trigger id="rest">sc</trigger>
+<description>Source Code</description>
+<snippet>{{{${1:python}
+
+${2:my code here}
+}}}
+$0</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">liste</trigger>
+<description>Liste</description>
+<snippet>[list${1:}]
+- $0
+[/list]
+</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">li</trigger>
+<description>List-item</description>
+<snippet>- $0</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">rest</trigger>
+<description>reStructuredText</description>
+<snippet>reStructuredText</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">im</trigger>
+<description>Image</description>
+<snippet>[[im ${1:adresse}|${2:link}|${3:center}|${4:text}]] $0</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">t1</trigger>
+<description>Header 1</description>
+<snippet>= ${1:Header level 1}
+$0</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">t2</trigger>
+<description>Header 2</description>
+<snippet>== ${1:Header level 2}
+$0</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">t3</trigger>
+<description>Header 3</description>
+<snippet>=== ${1:Header level 3}
+$0</snippet>
+</entry>
+
+<entry>
+<trigger id="rest">t4</trigger>
+<description>Header 4</description>
+<snippet>==== ${1:Header level 4}
+$0</snippet>
+</entry>
+
+</snip>

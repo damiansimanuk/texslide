@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="Images" >
+    <file>Images/help.png</file>
+    <file>Images/editcopy.png</file>
+    <file>Images/editcut.png</file>
+    <file>Images/editpaste.png</file>
+    <file>Images/exit.png</file>
+    <file>Images/fileclose.png</file>
+    <file>Images/filenew.png</file>
+    <file>Images/fileopen.png</file>
+    <file>Images/filesaveas.png</file>
+    <file>Images/undo.png</file>
+  </qresource>
+</RCC>

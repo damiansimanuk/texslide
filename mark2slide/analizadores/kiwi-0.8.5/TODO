@@ -1,0 +1,10 @@
+FIX SECTIONS
+
+  ========== important 1
+  2.2 ------ important 2
+  
+  if ----- "within" 2.2 or "===" is is a child
+
+- Section links like [TEXT]() where text is used to determine target section
+- Inter-documents links (and anchors !)
+- Table cells should be considered as blocks... but how to do it ?
