@@ -1,0 +1,160 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--
+	Copyright 2012 Simañuk Héctor Damián.
+	
+	Esta base esta tomada de varios script para hacer slides a partir
+	de un lenguaje de marcas como ser markdown. 
+	
+	Es parte del software texslide: www.xxxiii
+	
+	Todos los scripts usados estan licenciados bajo GPL V2 o superior.
+	
+	Puede ser usado y redistribuido siempre y cuando se mantenga esta
+	cabezera y no se use con fines de lucro.
+	
+	basado en:
+		http://meyerweb.com/eric/tools/css/reset/ 
+		
+-->
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>{{ title }}</title>
+	<style type="text/css" media="print">
+<!--
+		{{ css.print }}
+-->
+	</style>
+	<style type="text/css" media="screen, projection">
+<!--
+		{{ css.screen }}
+-->
+	</style>
+	<link rel="stylesheet" media="screen, projection" href="css/print.css">
+	<link rel="stylesheet" media="screen, projection" href="css/screen.css">
+	<script type="text/javascript">
+		//~ {{ js }}
+	</script>
+	
+	<link rel="stylesheet" media="print" href="file:///usr/lib/python2.7/site-packages/landslide-1.0.1-py2.7.egg/landslide/themes/default/css/print.css">
+    <link rel="stylesheet" media="screen, projection" href="file:///usr/lib/python2.7/site-packages/landslide-1.0.1-py2.7.egg/landslide/themes/default/css/screen.css">
+    
+    <script type="text/javascript" src="file:///usr/lib/python2.7/site-packages/landslide-1.0.1-py2.7.egg/landslide/themes/default/js/slides.js"></script>
+    
+    </head>
+
+<body>
+	<div id="blank">
+	</div>
+	<div class="presentation">
+		<div id="current_presenter_notes">
+			<div id="presenter_note">
+			</div>
+		</div>
+		<div class="slides">
+		{% for slide in slides %}
+			<!-- slide source: {% if slide.source %}{{ slide.source.rel_path }}{% endif %} -->
+			<div class="slide-wrapper">
+				<div class="slide{% if slide.classes %}{% for class in slide.classes %} {{ class }}{% endfor %}{% endif %}">
+					<div class="inner">
+					<header>
+						{{ slide.header.title }}
+						{{ slide.header.subti }}
+					</header>
+					{% if slide.section %}
+						<section>{{ slide.section }}</section>
+					{% endif %}
+					</div>
+					<footer>
+					{% if slide.footer %}
+						<aside class="footer">
+							<p>{{ slide.footer }}</p>
+						</aside>
+					{% endif %}
+					<aside class="page_number">
+					{{ slide.footer.page }}/ {{ pages }}
+					</aside>
+					</footer>
+				</div>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+	
+  {% if toc %}
+  <div id="toc" class="sidebar hidden">
+    <h2>Table of Contents</h2>
+    <table>
+      <caption>Table of Contents</caption>
+      {% for section in toc %}
+      <tr id="toc-row-{{ section.number }}">
+        <th><a href="#slide{{ section.number }}">{{ section.title }}</a></th>
+        <td><a href="#slide{{ section.number }}">{{ section.number }}</a></td>
+      </tr>
+      {% if section.sub %}
+        {% for subsection in section.sub %}
+        <tr id="toc-row-{{ subsection.number }}" class="sub">
+          <th><a href="#slide{{ subsection.number }}">{{ subsection.title }}</a></th>
+          <td><a href="#slide{{ subsection.number }}">{{ subsection.number }}</a></td>
+        </tr>
+        {% endfor %}
+      {% endif %}
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
+  
+	
+<div id="help" class="sidebar hidden">
+	<h2>Help</h2>
+	<table>
+		<caption>Help</caption>
+		<tr>
+			<th>Tble of Contents</th>
+			<td>t</td>
+		</tr>
+		<tr>
+			<th>Exposé</th>
+			<td>ESC</td>
+		</tr>
+		<tr>
+			<th>Full screen slides</th>
+			<td>e</td>
+		</tr>
+		<tr>
+			<th>Presenter View</th>
+			<td>p</td>
+		</tr>
+		<tr>
+			<th>Source Files</th>
+			<td>s</td>
+		</tr>
+		<tr>
+			<th>Slide Numbers</th>
+			<td>n</td>
+		</tr>
+		<tr>
+			<th>Toggle screen blanking</th>
+			<td>b</td>
+		</tr>
+		<tr>
+			<th>Show/hide slide context</th>
+			<td>c</td>
+		</tr>
+		<tr>
+			<th>Notes</th>
+			<td>2</td>
+		</tr>
+		<tr>
+			<th>Help</th>
+			<td>h</td>
+		</tr>
+	</table>
+</div>
+
+
+	
+	
+  <script>main()</script>
+</body>
+</html>

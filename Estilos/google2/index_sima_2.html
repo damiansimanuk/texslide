@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<!--
+  Copyright 2011 Google Inc.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  Original slides: Marcin Wichary (mwichary@google.com)
+  Modifications: Chrome DevRel Team (chrome-devrel@googlegroups.com)
+                 Alex Russell (slightlyoff@chromium.org)
+                 Brad Neuberg
+-->
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1" />
+    <title>HTML5 Presentation</title>
+    <link id="prettify-link" />
+    <link href="css/moon.css" class="theme" rel="stylesheet" />
+    <link href="css/sand.css" class="theme" rel="stylesheet" />
+    <link href="css/sea_wave.css" class="theme" rel="stylesheet" />
+    <link href="css/default.css" class="theme" rel="stylesheet" media="screen"  />
+    <link href="css/common.css" rel="stylesheet" media="screen" />
+    
+    <style>
+    /* Pygments default theme */
+.hll { background-color: #ffffcc }
+.c { color: #408080; font-style: italic } /* Comment */
+.err { border: 1px solid #FF0000 } /* Error */
+.k { color: #008000; font-weight: bold } /* Keyword */
+.o { color: #666666 } /* Operator */
+.cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.cp { color: #BC7A00 } /* Comment.Preproc */
+.c1 { color: #408080; font-style: italic } /* Comment.Single */
+.cs { color: #408080; font-style: italic } /* Comment.Special */
+.gd { color: #A00000 } /* Generic.Deleted */
+.ge { font-style: italic } /* Generic.Emph */
+.gr { color: #FF0000 } /* Generic.Error */
+.gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.gi { color: #00A000 } /* Generic.Inserted */
+.go { color: #808080 } /* Generic.Output */
+.gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.gs { font-weight: bold } /* Generic.Strong */
+.gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.gt { color: #0040D0 } /* Generic.Traceback */
+.kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.kp { color: #008000 } /* Keyword.Pseudo */
+.kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.kt { color: #B00040 } /* Keyword.Type */
+.m { color: #666666 } /* Literal.Number */
+.s { color: #BA2121 } /* Literal.String */
+.na { color: #7D9029 } /* Name.Attribute */
+.nb { color: #008000 } /* Name.Builtin */
+.nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.no { color: #880000 } /* Name.Constant */
+.nd { color: #AA22FF } /* Name.Decorator */
+.ni { color: #999999; font-weight: bold } /* Name.Entity */
+.ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.nf { color: #0000FF } /* Name.Function */
+.nl { color: #A0A000 } /* Name.Label */
+.nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.nt { color: #008000; font-weight: bold } /* Name.Tag */
+.nv { color: #19177C } /* Name.Variable */
+.ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.w { color: #bbbbbb } /* Text.Whitespace */
+.mf { color: #666666 } /* Literal.Number.Float */
+.mh { color: #666666 } /* Literal.Number.Hex */
+.mi { color: #666666 } /* Literal.Number.Integer */
+.mo { color: #666666 } /* Literal.Number.Oct */
+.sb { color: #BA2121 } /* Literal.String.Backtick */
+.sc { color: #BA2121 } /* Literal.String.Char */
+.sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.s2 { color: #BA2121 } /* Literal.String.Double */
+.se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.sh { color: #BA2121 } /* Literal.String.Heredoc */
+.si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.sx { color: #008000 } /* Literal.String.Other */
+.sr { color: #BB6688 } /* Literal.String.Regex */
+.s1 { color: #BA2121 } /* Literal.String.Single */
+.ss { color: #19177C } /* Literal.String.Symbol */
+.bp { color: #008000 } /* Name.Builtin.Pseudo */
+.vc { color: #19177C } /* Name.Variable.Class */
+.vg { color: #19177C } /* Name.Variable.Global */
+.vi { color: #19177C } /* Name.Variable.Instance */
+.il { color: #666666 } /* Literal.Number.Integer.Long */
+
+    </style>
+  </head>
+  <body>
+    <nav id="helpers">
+      <button title="Previous slide" id="nav-prev" class="nav-prev">⇽</button> 
+      <button title="Jump to a random slide" id="slide-no">5</button> 
+      <button title="Next slide" id="nav-next" class="nav-next">⇾</button>
+      <menu>
+        <button type="checkbox" data-command="toc" title="Table of Contents" class="toc">TOC</button>
+        <button type="checkbox" data-command="notes" title="View Slide Notes">✏</button>
+        <button type="checkbox" data-command="source" title="View slide source">↻</button>
+        <button type="checkbox" data-command="help" title="View Help">?</button>
+      </menu>
+    </nav>
+    <div id="left-init-key" class="presentation">
+      <div id="presentation-counter">Loading...</div>
+      <div class="slides">
+		  
+        <div class="slide" id="landing-slide">
+		  <header><h1>Hola mundo</h1></header>
+          <section class="middle">
+            <p>This presentation is an HTML5 website</p>
+            <p>This presentation is an HTML5 website</p>
+            <p>This presentation is an HTML5 website</p>
+            <p>This presentation is an HTML5 website</p>
+           </section>
+        </div>
+ 
+		  
+        <div class="slide" id="a2">
+		<header>render.py</header>	
+	<section>
+<div class="codehilite"><pre><span class="kn">import</span> <span class="nn">jinja2</span>
+<span class="kn">import</span> <span class="nn">markdown</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;presentation.html&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+    <span class="n">slides_src</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;slides.md&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;&lt;hr /&gt;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+
+    <span class="n">slides</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">slide_src</span> <span class="ow">in</span> <span class="n">slides_src</span><span class="p">:</span>
+        <span class="n">header</span><span class="p">,</span> <span class="n">content</span> <span class="o">=</span> <span class="n">slide_src</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">slides</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s">&#39;header&#39;</span><span class="p">:</span> <span class="n">header</span><span class="p">,</span> <span class="s">&#39;content&#39;</span><span class="p">:</span> <span class="n">content</span><span class="p">})</span>
+
+    <span class="n">template</span> <span class="o">=</span> <span class="n">jinja2</span><span class="o">.</span><span class="n">Template</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;base.html&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">({</span><span class="s">&#39;slides&#39;</span><span class="p">:</span> <span class="n">slides</span><span class="p">}))</span>
+<span class="n">temp_base</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;template.base.html&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="kn">from</span> <span class="nn">jinja2</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">temp_base2</span> <span class="o">=</span> <span class="s">&#39;&#39;&#39;</span>
+<span class="s">{</span><span class="si">% f</span><span class="s">or slide in slides %}</span>
+
+<span class="s">        &lt;header trucho&gt;{{ slide.header }}&lt;/header&gt;</span>
+<span class="s">        &lt;aaa&gt;{{ slide.content }}&lt;/aaaa&gt;</span>
+<span class="s">        &lt;header&gt;{{ slide.title }}&lt;/header&gt;</span>
+<span class="s">{</span><span class="si">% e</span><span class="s">ndfor%}</span>
+<span class="s">&#39;&#39;&#39;</span>
+
+<span class="c">#~ file:///usr/lib/python2.7/site-packages/landslide-1.0.1-py2.7.egg/landslide/themes/default/js/slides.js</span>
+<span class="n">js1</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;/usr/lib/python2.7/site-packages/landslide-1.0.1-py2.7.egg/landslide/themes/default/js/slides.js&quot;</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">css_s</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">&quot;/usr/lib/python2.7/site-packages/landslide-1.0.1-py2.7.egg/landslide/themes/tango/css/screen.css&quot;</span><span class="p">,</span><span class="s">&#39;r&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">template</span> <span class="o">=</span> <span class="n">Template</span><span class="p">(</span><span class="n">temp_base</span><span class="p">)</span>
+<span class="c">#~ aaa = template.render(slides=[&#39;a&#39;,&#39;b&#39;])</span>
+<span class="n">aaa</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">allslides</span><span class="p">,</span><span class="n">css</span><span class="o">=</span><span class="p">{</span><span class="s">&#39;screen&#39;</span><span class="p">:</span><span class="n">css_s</span><span class="p">,</span><span class="s">&#39;print&#39;</span><span class="p">:</span><span class="s">&#39;imprimir que ta loco&#39;</span><span class="p">},</span><span class="n">js</span><span class="o">=</span><span class="n">js1</span><span class="p">)</span>
+<span class="c">#~ print(aaa)</span>
+
+<span class="n">salida</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s">&#39;salida.html&#39;</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">)</span>
+<span class="n">salida</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">aaa</span><span class="p">)</span>
+<span class="n">salida</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+</pre></div></section>
+        </div>
+ 
+		  
+        <div class="slide" id="landing-slide3">
+		  <header><h1>Hola mundo</h1></header>
+          <section class="middle">
+            <p>This presentation is an HTML5 website</p>
+            <p>This presentation is an HTML5 website</p>
+            <p>This presentation is an HTML5 website</p>
+            <p>This presentation is an HTML5 website</p>
+           </section>
+        </div>
+ 
+<!--
+        <div class="slide" id="table-of-contents">
+          <header><h1>TOC</h1></header>
+          <section>
+            <ul id="toc-list">
+            </ul>
+          </section>
+        </div>
+-->
+
+       </div> <!-- slides -->
+      <div id="speaker-note" class="invisible" style="display: none;">
+      </div> <!-- speaker note -->
+      <aside id="help" class="sidebar invisible" style="display: hidden;">
+        <table>
+          <caption>Help</caption>
+          <tbody>
+            <tr>
+              <th>Move Around</th>
+              <td>&larr;&nbsp;&rarr;</td>
+            </tr>
+            <tr>
+              <th>Source File</th>
+              <td>s</td>
+            </tr>
+            <tr>
+              <th>Change Theme</th>
+              <td>t</td>
+            </tr>
+            <tr>
+              <th>Syntax Highlight</th>
+              <td>h</td>
+            </tr>
+            <tr>
+              <th>Speaker Notes</th>
+              <td>n</td>
+            </tr>
+            <tr>
+              <th>Toggle 3D</th>
+              <td>3</td>
+            </tr>
+            <tr>
+              <th>Help</th>
+              <td>0</td>
+            </tr>
+          </tbody>
+        </table>
+      </aside>
+    </div> <!-- presentation -->
+
+    <!--[if lt IE 9]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">
+    </script>
+    <script>CFInstall.check({ mode: "overlay" });</script>
+    <![endif]-->
+
+<!--
+    <script src="src/prettify/prettify.js" onload="prettyPrint();" defer></script>
+-->
+    <script src="js/utils_mod.js"></script>
+<!--
+    <script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+-->
+
+  </body>
+</html>

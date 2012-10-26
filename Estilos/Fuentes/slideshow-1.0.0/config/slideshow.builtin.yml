@@ -1,0 +1,54 @@
+### builtin configuration for arrays
+#
+#  access or overwrite using nested builtin context e.g.
+#  builtin:
+#    textile:
+#        libs: [ whatever ]
+
+
+helper:
+  unparsed: [ slide, style ]
+  renames: [ include, class ]
+  exprs: [ class, clear ]
+
+# text filters  
+filters:
+  - skip-end-directive
+  - directives_bang_style_to_percent_style
+  - directives_percent_style
+  - comments-percent-style 
+  - leading-headers
+  - erb-django-style
+  - erb-rename-helper-hack
+  - dump_content_to_file_debug_text_erb
+  - erb
+  - code-block-curly-style
+  - dump_content_to_file_debug_text
+
+
+# markup (textile, markdown, rest) config
+    
+textile:
+  extnames: [ .textile, .t ]
+  
+rest:  
+  extnames: [ .rst, .rest ]
+    
+markdown:
+  extnames: [ .markdown, .m, .mark, .mkdn, .md, .txt, .text ]
+
+# note: only kramdown is listed as a dependency in gem specs (because it's Ruby only and, thus, easy to install)
+#  if you want to use other markdown libs install the required/desired lib e.g.
+#  use  gem install rdiscount for rdiscount and so on
+#
+# also note for now the first present markdown library gets used
+#  the search order is first come, first serve, that is: rdiscount, rpeg-markdown, maruku, bluecloth, kramdown (fallback, always present)
+
+  libs:
+    - pandoc-ruby
+    - rdiscount
+    - rpeg-markdown
+    - maruku
+    - bluecloth
+    - kramdown
+    
