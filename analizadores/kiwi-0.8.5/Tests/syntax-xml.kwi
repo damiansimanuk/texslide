@@ -1,0 +1,18 @@
+<div>Aliquam lacus tellus, sollicitudin sed, varius in, dictum id, nibh. Quisque consequat, quam
+consectetuer facilisis posuere, <span class="hello world" style="background:yellow">massa sem ultricies
+eros</span>, vel porttitor sem quam <br />
+ut ante. Vestibulum hendrerit. Phasellus pretium rhoncus neque. Etiam enim.
+Quisque porta massa ac turpis. Nulla imperdiet tincidunt risus.</div>
+
+<pre>
+
+	An here is 
+
+	preformatted text
+
+	
+	separated by empy newlines, but Kiwi will just ignore it, as it is within a
+	pre tag
+
+</pre>
+

@@ -1,0 +1,7 @@
+
+The features described here are only HTTP-level features, meaning it's basically
+what features are exposed. For more information about Iciela internals, please
+see the [specification][ICIELA-SPEC], and of course, read the
+[introduction][ICIELA-INTRO].
+
+

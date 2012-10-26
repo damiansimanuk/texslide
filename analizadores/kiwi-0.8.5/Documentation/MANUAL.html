@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Kiwi User Manual</title>
+<style><!-- 
+body {
+	margin-left: 10%;
+	margin-right: 10%;
+	padding: 20pt;
+	padding-top: 10pt;
+	background: rgb(255,255,255);
+	font:  10.5pt/15pt "Helvetica",Helvetica,sans-serif;
+	color: rgb(80,80,80);
+}
+
+h1, h2, h3, h4 {
+	font-family: "Trebuchet MS",Helvetica,sans-serif;
+	color: rgb(22, 130, 178);
+	font-weight: normal;
+	padding-top: 0.5em;
+	cursor: pointer;
+}
+
+hr {
+	color: rgb(150, 220, 238);
+	background: rgb(150, 220, 238);
+	height: 1px;
+	border: 0;
+}
+
+
+b {
+	color: rgb(22,130,178);
+}
+
+strong {
+	color: rgb(103,183,0);
+}
+
+
+a:link, a:active, a:visited {
+	color: rgb(22,130,178);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+	background-color: #dbecf4;
+}
+
+aimg {
+	border: 0;
+}
+
+#header, #footer {
+	font-size: 7pt;
+	clear: both;
+	width: 100%;
+	color: rgb(177,208,223);
+}
+
+.kiwiContent {
+	text-align: left;
+}
+
+
+#footer {
+	padding-top:  30pt;
+	text-align: right;
+}
+
+/*  Kiwi-specific  */
+
+.title {
+	margin-bottom: 0;
+}
+
+.kiwiMeta {
+	max-width: 700px;
+	padding: 5pt;
+	margin-bottom:  2em;
+	border-top:  1px solid rgb(150, 220, 238);
+	background-color: rgb(250,250,250);
+}
+
+.kiwiMeta tr td {
+	color: rgb(22, 130, 178);
+}
+
+.kiwiMeta tr td.name {
+	font-weight: bold;
+}
+
+.kiwiContent {
+	max-width: 700px;
+}
+
+.kiwiContent .heading .number {
+	padding-right: 8pt;
+}
+
+.kiwiContent .heading .number .lastDot {
+	display: none;
+}
+
+
+.kiwiContent .heading .number .level0 .lastDot {
+	display: inline;
+}
+
+.kiwiContent h1 {
+	font-size: 1.8em;
+	font-weight: bold;
+	margin-top: 1.5em;
+	padding-bottom: 0.5em;
+	border-bottom:  1px dotted rgb(150, 220, 238);
+}
+
+.kiwiContent h2 {
+	font-size: 1.4em;
+	font-weight: bold;
+	padding-bottom: 0.5em;
+	border-bottom:  1px dotted rgb(150, 220, 238);
+}
+
+.kiwiContent h3 {
+	font-size: 1.2em;
+	font-weight: normal;
+}
+
+.kiwiContent pre {
+	padding: 5pt;
+	border:  1px solid rgb(150, 220, 238);
+	padding-left: 20pt;
+	background-color: rgb(240,240,250);
+	font-size: 8pt;
+	color: rgb(22,130,178);
+}
+
+.kiwiContent code {
+	font-size: 8pt;
+	background-color: rgb(240,240,250);
+}
+
+.kiwiContent dt {
+	color: rgb(22,130,178);
+	font-weight: bold;
+}
+
+.kiwiContent dd {
+	border-left:  1px solid rgb(150, 220, 238);
+	padding-left: 20pt;
+	margin-bottom: 2em;
+}
+
+.kiwiContent dd pre {
+}
+
+.kiwiContent ul {
+	padding-top: 0em;
+	margin-top: 0em;
+}
+
+.kiwiContent ul li {
+	padding-bottom: 0.2em;
+}
+
+.kiwiContent ul li.todo {
+	list-style-type: square;
+}
+
+.kiwiContent ul li.todo.done {
+	text-decoration: line-through;
+}
+
+.kiwiContent table {
+	border:  1px solid rgb(150, 220, 238);
+	padding: 0pt;
+}
+
+.kiwiContent table caption {
+	font-family: serif;
+	padding-top: 1em;
+	padding-bottom: 0.5em;
+	font-style: italic;
+	font-size: 90%;
+	color: rgb(22, 130, 178);
+}
+
+.kiwiContent table tbody {
+}
+
+.kiwiContent table tr {
+	margin: 0;
+}
+
+.kiwiContent table tr td {
+	margin: 0;
+	padding: 5pt;
+	font-size: 90%;
+	min-width: 125px;
+	background-color: rgb(250,250,250);
+	border-bottom: 1px solid rgb(150, 220, 238);
+}
+
+.kiwiContent table tr td.lastRow {
+	border-bottom: none;
+}
+
+.kiwiContent table tr td.lastCol {
+	border-right: none;
+}
+
+.kiwiContent table tr.even td {
+	background-color: #FEFEFE;
+
+}
+
+.kiwiContent table tr.odd td {
+	background-color: rgb(240,240,240);
+}
+
+.kiwiContent .term {
+	color: rgb(22, 130, 178);
+	background: rgb(240, 250, 256);
+}
+
+.kiwiContent .quote {
+	font-style: italic;
+	color: rgb(120, 120, 120);
+}
+
+.kiwiContent .citation {
+	font-style: italic;
+	color: rgb(120, 120, 120);
+}
+
+.kiwiContent div[class^="ann"] {
+	margin-top: 5pt;
+	margin-bottom: 5pt;
+	padding: 5pt;
+	padding-left: 20pt;
+	color: rgb(100, 100, 100);
+}
+
+.kiwiContent div[class^="ann"] .title {
+	font-weight: bold;
+}
+
+.kiwiContent .annNote {
+	border:  1px solid rgb(103,183,0);
+	margin-top: 5pt;
+	margin-bottom: 5pt;
+	padding: 5pt;
+	padding-left: 20pt;
+	background: #fffbe4;
+	color: rgb(100, 100, 100);
+	border:  1px solid #dedac3;
+}
+
+.kiwiContent .annNote .title {
+	font-weight: bold;
+	display: none;
+}
+
+.kiwiReferences {
+	font:  8pt/12pt "Lucida Grande",Lucida,sans-serif;
+	margin-top: 10pt;
+	padding: 5pt;
+	border-top:  1px solid rgb(200, 200, 200);
+	background-color: rgb(250,250,250);
+	color: rgb(200, 200, 200);
+	font-size: 8pt;
+}
+.kiwiReferences a:link, .kiwiReferences a:active, .kiwiReferences a:visited {
+	color: rgb(150,150,150);
+}
+
+.kiwiReferences .entry {
+	padding-top: 5pt;
+	clear: both;
+}
+
+.kiwiReferences .entry .name {
+	float: left;
+	font-weight: bold;
+	padding-right: 5pt;
+}
+
+.kiwiReferences .entry .content {
+	text-align: right;
+}
+
+ --></style>
+</head>
+<body>
+<div
+	class="title"><h1>Kiwi User Manual</h1></div><table class='kiwiMeta'><tr><td width='0px' class='name'>Authors</td><td width='100%' class='value'>Sébastien Pierre &lt;sebastien@type-z.org&gt;</td></tr><tr><td width='0px' class='name'>Revision</td><td width='100%' class='value'>0.8.5</td></tr></table>
+<div class="kiwiContent"><div class='content'><div class="section"><h1 class="heading"><span class="number"><span class="level0">1<span class="lastDot dot">.</span></span></span>Introduction</h1><div class="level1"><p>Kiwi is yet-another-markup language which is designed to be used for writing your documentation in an text editor such as Vi or Emacs.</p><p>Most existing markups are designed to be used as wiki/web markup, with the implication that they do not expect the markup content to use indentation to express structure.</p><p>When writing long documents (like tech notes, or manuals) in ASCII format, it is good to use as many visual cues (underlining, indentation) to express the structure of the document. Kiwi is one of the few markup engines that is designed with in this perspective from the ground.</p><p>Additionaly, Wiki can be used as a wiki/web markup engine, as it is quite close (but not exactly similar) to <a href="#MARKDOWN">Markdown</a></p><p>Kiwi comes with a nice command-line interface, can be embedded in applications, and is integrated into [Tahchee] and [SDoc] (which are other Ivy projects).</p></div></div><div class="section"><h1 class="heading"><span class="number"><span class="level0">2<span class="lastDot dot">.</span></span></span>Features</h1><div class="level1"><p>Kiwi support syntactic shortcuts for the following elements of a documents:</p><ul><li>Sections and paragraphs </li><li>Various types of lists, including definition lists </li><li>Tables </li><li>Emphasis, underline, preformatted, email address, URLs </li><li>Quote, citation </li><li>Linking and references</li></ul><p>Kiwi is also:</p><ul><li>Written in pure Python </li><li>Comes with full API documentation </li><li>Can be easy customized with your own markup</li></ul></div></div><div class="section"><h1 class="heading"><span class="number"><span class="level0">3<span class="lastDot dot">.</span></span></span>Quick start</h1><div class="level1"><p>To get up and running with Kiwi, you will need a Python interpreter, as well as the <code>make</code> command (it is not required if you want to install Kiwi manually):</p><ul><li>Unpack the latest Kiwi tarball available at <a href="http://www.ivy.fr/kiwi/kiwi-latest.tar.gz">http://www.ivy.fr/kiwi/kiwi-latest.tar.gz</a> </li><li>Type <code>make install</code> to install Kiwi in <code>/usr/local/share/kiwi</code> </li><li>The <code>kiwi</code> command should now be available to you</li></ul><p>If you wish to install Kiwi manually, simply:</p><ul><li>Move the <code>Sources/kiwi</code> directory somewhere in your <code>PYTHON_PATH</code> (this may be Python <code>site-packages</code> directory) </li><li>Create a script that invokes &gt; python -c "import sys,kiwi.main;kiwi.main.run(sys.argv[1:])"</li></ul><p>Now, you can play with the <code>kiwi</code> command with any example provided in the <code>Tests</code> directory, to get a feel of what it is like. Note that <code>kiwi -p</code> produces a pretty-printed XML tree, and <code>kiwi -m</code> produces a (compacted) HTML file.</p></div></div><div class="section"><h1 class="heading"><span class="number"><span class="level0">4<span class="lastDot dot">.</span></span></span>Basics</h1><div class="level1"><p>The basic structure of a Kiwi document is the following</p><div class="section"><h2 class="heading"><span class="number"><span class="level0">4<span class="dot">.</span></span><span class="level1">1<span class="lastDot dot">.</span></span></span>Paragraphs</h2><div class="level2"><p>Once you have written this very simple document you may want to add some content, for example paragraphs and lists. Both paragraph and lists (and also sections) are <em>structural elements</em>, which means that they help you to structure the content of the document.</p><p>Writing !paragraphs! is pretty simple, you basically just have to type your text, taking care that all lines have the same <em>indentation</em>, and insert a blank line between your paragraphs.</p><p>You may want to insert !line breaks! within your paragraphs. In this case instead of separating the two parts of your paragraph by a blank line, which would lead Kiwi to consider that your paragraph is in fact two paragraphs, you insert a <em>pipe</em> character on the blank line.</p><p>Here is an example of a paragraph with a line break in it:</p><pre>Blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
+|
+Here we are still in the same paragraph. Blah blah blah blah blah blah blah
+blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</pre></div></div><div class="section"><h2 class="heading"><span class="number"><span class="level0">4<span class="dot">.</span></span><span class="level1">2<span class="lastDot dot">.</span></span></span>Lists</h2><div class="level2"><p>The other important structural elements are !lists!. Kiwi provides two types of lists: the <em>classic lists</em> and the <em>definition lists</em>. The <em>classic list</em> only lists items, whereas the <em>defintion list</em> offers a way to list terms and give a definition to them.</p><p>These two types are not very different, I will explain the differences later. Basically a list is composed of an <em>optional list heading</em> which is a sentence that ends with a colon, like this:</p><pre>Here is simple list heading:</pre><p>This optional heading can span over many lines, provided there is no paragraph break between those lines.</p><p>The other component of a list are of course <em>list items</em> which begin with a dash or a single letter or digit with a closing paren, which is followed by an <em>optional list item heading</em>, which is also followed by a <em>list item body</em>.</p><p>Here is the example of a least that illustrate the differents aspects of the lists:</p><pre> Here is simple list heading: 
+   -  Here is the optional list heading:
+      Here is the list body
+   b) Here is another list item. Note that the indentation of the text
+      must be the same as the preceding list item, otherwise it may be
+      interpreted as a nested list.
+
+   1) We can also jump lines between list items.
+      - And make nested list items
+      - Heading: That also have a list item heading.</pre><div class='annNote'><div class='title'>Note</div><div class='content'>
+      When writing lists, take <em>great care</em> with indentation, as if the
+      different lines are not properly indented, some lists items could be
+      interpreted as nested lists.</div></div></div></div><div class="section"><h2 class="heading"><span class="number"><span class="level0">4<span class="dot">.</span></span><span class="level1">3<span class="lastDot dot">.</span></span></span>Definitions</h2><div class="level2"><p>You may sometimes want to do group paragraphs or whole subsets of your document under a particular term (or qualifier). For instance, if you are defining concepts, or describing different elements, you may want to tell that a set of paragraphs belong to that particular element.</p><p>This is the purpose of the <span class='term'>definition lists</span>: they provide a mean to express a term (or a sentence), and the following elements with a higher indentation will be considered as being part of the term definition.</p><pre>Term::
+
+    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras accumsan. 
+    
+    Nullam ac purus quis magna consectetuer luctus. Duis sit amet sem. 
+
+Other term::
+
+    Donec a magna mattis dolor semper pulvinar. Donec viverra libero sit amet dolor.
+    Duis ut ante at lacus pharetra iaculis.</pre><p>Will be rendered as</p><dl><dt> Term</dt><dd><div class='content'><p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Cras accumsan.</p><p>Nullam ac purus quis magna consectetuer luctus. Duis sit amet sem.</p></div></dd><dt> Other term</dt><dd><div class='content'><p>Donec a magna mattis dolor semper pulvinar. Donec viverra libero sit amet dolor. Duis ut ante at lacus pharetra iaculis.</p></div></dd></dl></div></div><div class="section"><h2 class="heading"><span class="number"><span class="level0">4<span class="dot">.</span></span><span class="level1">4<span class="lastDot dot">.</span></span></span>Notes and annotated blocks</h2><div class="level2"><pre>Note ______________________________________________________________
+Lorem ipsum dolor si amet</pre><p>will be displayed a</p><div class='annNote'><div class='title'>Note</div><div class='content'>
+    Lorem ipsum dolor si amet</div></div><p>You can also write a note than contains multiple paragraphs:</p><pre>Note ______________________________________________________________
+
+Lorem ipsum....
+
+Dolor si amet...
+
+_____________________________________________________________________</pre><p>Notes are actually <span class='term'>annotated blocks</span>, which are blocks surrounded by an annotation (here, the annotation is <code>Note</code>). You can use many other annotations (such as <code>Example</code>, <code>Use case</code>, etc..), as with annotations will be translated to a lower-case class attribute in your resulting HTML document. So you simply have to add the styles you want in your CSS stylesheet to support more annotations blocks.</p><div class='annNote'><div class='title'>Note</div><div class='content'></div></div><p>As with lists, <span class='term'>indentation is primordial</span>. Your note block should be more indented than the parent paragraph. All paragraphs with the same indentation level as the note will be considered part of the note.</p></div></div><div class="section"><h2 class="heading"><span class="number"><span class="level0">4<span class="dot">.</span></span><span class="level1">5<span class="lastDot dot">.</span></span></span>Sections and subsections</h2><div class="level2"><p>Once you have written your text you may want to add structure, for example you may want to create sections, sub sections, etc. If you want to create !sections! and also nested sections, you just have to insert a <em>section heading</em> in your text.</p><p>A <em>section heading</em> consists in a single line of text that is prefixed by an optional section number, which is constituted of digits separated by dots. Then follows an optional underline, like the following example shows:</p><pre>Section level 1
+===============
+
+Section level 2
+---------------
+
+1. Section level 3
+------------------
+
+1.2 Section level 4</pre><p>The leading number is not required when the section is underlined (using <code>===</code> or <code>---</code>), but it does indicate the depth of the section (<code>1</code> means depth 1, <code>1.1</code> means depth 2, <code>1.1.a</code> means depth 3, etc).</p><p>Section depths are computed using the following rules:</p><ul><li>Sections underlined with <code>===</code> are have a lower depth than sections with <code>---</code>, which in turn have a lower depth sections without underlining.</li></ul><ul><li>Sections with no number will have a lower depth than sections with 1 number (<code>1. Section</code>), which have a lower depth than sections with 2 numbers (<code>1.1 Section</code>), etc.</li></ul><ul><li>Sections which are explicitly indented will have a depth which is at least equal to their parent section.</li></ul><p>Alternatively, you can also write sections by prefixing the title by a number of <code>=</code> like that:</p><pre>== Section level 1
+=== Section level 2
+==== Section level 3</pre><p>this notation is designed for people who don't indent their text and sections (if you are using Kiwi as markup language for a Web wiki, for instance). The depth of the section is identified by counting the number of '=' characters, where the first does not count.</p><div class='annNote'><div class='title'>Note</div><div class='content'></div></div><p>Kiwi section markup is very flexible, and allows you to use indentation, numbers or different underlines to denote the depth of your sections. Numbering is not important as the section numbering will be recalculated anyway, so you can use <code>X.X</code> instead of <code>1.2</code>. This will make your life easier when typing large documents.</p></div></div><div class="section"><h2 class="heading"><span class="number"><span class="level0">4<span class="dot">.</span></span><span class="level1">6<span class="lastDot dot">.</span></span></span>Tables</h2><div class="level2"><p>Tables are written using the following markup:</p><table cellpadding="0" cellspacing="0" align="center"><caption>Tables</caption><tbody><tr class='even'><td>Table header<br /></td><td colspan='3'><code>== Header</code><br /></td></tr><tr class='odd'><td>Row separator<br /></td><td colspan='3'>Use a line of dashes, equal signs or plus signs<br /></td></tr><tr class='even'><td>Cell separator<br /></td><td>``<br /></td><td>``<br /></td></tr></tbody></table><p>Optionally, table borders can use single pipes <code>|</code>.</p><p>The previous feature table has been written using the following markup:</p><pre>    == Tables
+    ===================================================================
+    Table header    || ``== Header``
+    -------------------------------------------------------------------
+    Row separator   || Use a line of dashes, equal signs or plus signs
+    -------------------------------------------------------------------
+    Cell separator  || ``||``
+    =============================================</pre></div></div><div class="section"><h2 class="heading"><span class="number"><span class="level0">4<span class="dot">.</span></span><span class="level1">7<span class="lastDot dot">.</span></span></span>Preformatted text</h2><div class="level2"><p>There are two ways of doing preformatted text. The first one is by prefixing each line of your text by <code>&gt;</code> plus one tab or at least 3 spaces.</p><pre>&gt;   def hello():
+&gt;     print "Hello, world !"</pre><p>will be rendered as</p><pre>def hello():
+  print "Hello, world !"</pre><p>Using this <code>&gt;</code> markup helps explicitly delimiting a block and visually denoting where the indentation starts. However, this markup makes typing and copy-pasting more difficult, which is why we provide an alternative markup:</p><pre>&lt;&lt;&lt;
+def hello():
+   print "Hello, world !"
+&gt;&gt;&gt;</pre><p>which produces the same result</p><pre>def hello():
+print "Hello, world !"</pre><p>but involves less typing. The rule for this is that you have <code>&lt;&lt;&lt;</code> and <code>&gt;&gt;&gt;</code> standing on empty lines, and that the lines within these delimiters are either empty or have at least the same indentation as the delimiters.</p></div></div><div class="section"><h2 class="heading"><span class="number"><span class="level0">4<span class="dot">.</span></span><span class="level1">8<span class="lastDot dot">.</span></span></span>Document header and title</h2><div class="level2"><p>todo</p></div></div><div class="section"><h2 class="heading"><span class="number"><span class="level0">4<span class="dot">.</span></span><span class="level1">9<span class="lastDot dot">.</span></span></span>Links and bibliographic references</h2><div class="level2"><p>todo</p></div></div></div></div><div class="section"><h1 class="heading"><span class="number"><span class="level0">5<span class="lastDot dot">.</span></span></span>Syntax summary</h1><div class="level1"><p>Now you are able to write basic text documents, but you may want to go further. Kiwi provide way to mark up everything in your documents. Some ways to put this mark-up are simple and quick, some other ways are made possible using <em>custom tags</em>, which we will discover very soon.</p><p>For the moment, here is the list of the available content mark up facilities:</p><table cellpadding="0" cellspacing="0" align="center"><tbody><tr class='even'><td colspan='3'><strong>Inlines</strong><br /></td></tr><tr class='odd'><td>Emphasis<br /></td><td><code>*emphasized*</code><br /></td><td><em>emphasized</em><br /></td></tr><tr class='even'><td>Strong<br /></td><td><code>**strong**</code><br /></td><td><strong>strong</strong><br /></td></tr><tr class='odd'><td>Code<br /></td><td><code> `code` </code><br /></td><td><code>code</code><br /></td></tr><tr class='even'><td>Term<br /></td><td><code> _term_ </code><br /></td><td><code>term</code><br /></td></tr><tr class='odd'><td>Quoted<br /></td><td><code>''quoted text''</code><br /></td><td>&ldquo;<span class='quote'>quoted text</span>&rdquo;<br /></td></tr><tr class='even'><td>Citation<br /></td><td><code>&laquo;<span class='citation'>a citation</span>&raquo;</code></td><td>&laquo;<span class='citation'>a citation</span>&raquo;<br /></td></tr><tr class='odd'><td colspan='3'><strong>Linking</strong><br /></td></tr><tr class='even'><td>URL<br /></td><td><code>&lt;http://www.myurl.com/page&gt;</code><br /></td><td><a href="http://www.myurl.com/page">http://www.myurl.com/page</a><br /></td></tr><tr class='odd'><td>Email<br /></td><td><code>&lt;writeme@mail.com&gt;</code><br /></td><td><a href="mailto:&#119;&#114;&#105;&#116;&#101;&#109;&#101;&#64;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#119;&#114;&#105;&#116;&#101;&#109;&#101;&#64;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a><br /></td></tr><tr class='even'><td>Link<br /></td><td><code>some [linked text](http://www.myurl.com "title") ...</code><br /></td><td>some <a href=" "title"">linked text</a> &hellip;<br /></td></tr><tr class='odd'><td>Local link<br /></td><td><code>some [linked text](../README "title") ...</code><br /></td><td>some <a href=" "title"">linked text</a> &hellip;<br /></td></tr><tr class='even'><td>Ref Link<br /></td><td><code>some [referenced text][MYREF] ...</code><br /></td><td>some <a href="MYREF">referenced text</a> &hellip;<br /></td></tr><tr class='odd'><td>Ref Entry<br /></td><td><code>    [REF:] My reference ...</code><br /></td><td>Will be associated to the above reference<br /></td></tr><tr class='even'><td colspan='3'><strong>Misc characters</strong><br /></td></tr><tr class='odd'><td>Break<br /></td><td><code>|</code><br /></td><td>Breaks the current paragraph<br /></td></tr><tr class='even'><td>Newline<br /></td><td><code>\n</code><br /></td><td>Inserts a newline<br /></td></tr><tr class='odd'><td>Longdash<br /></td><td><code> -- </code> or <code> --- </code><br /></td><td>longdash &ndash; or &mdash;<br /></td></tr><tr class='even'><td>Dots<br /></td><td><code> ... </code><br /></td><td>dots ( &hellip; )<br /></td></tr><tr class='odd'><td>Arrows<br /></td><td><code> &lt;--&gt;, --&gt;, &lt;-- </code><br /></td><td>arrows &harr;, &rarr;, &larr;<br /></td></tr><tr class='even'><td>Entities<br /></td><td><code>&amp;copy;</code>, <code>#&amp;138;</code><br /></td><td>&copy;, #&138;<br /></td></tr><tr class='odd'><td colspan='3'><strong>Escaping</strong><br /></td></tr><tr class='even'><td>Block<br /></td><td><code>&lt;[escaped _text_]&gt;</code><br /></td><td>escaped _text_<br /></td></tr><tr class='odd'><td>Text<br /></td><td><code>\"escaped _text_"</code><br /></td><td>escaped _text_<br /></td></tr></tbody></table><p>The different way of marking up listed above should be sufficient for most of your needs. However, if you have more particular needs, you can very easily create your own syntax and extend Kiwi. This is the purpose of the next section.</p></div></div><div class="section"><h1 class="heading"><span class="number"><span class="level0">6<span class="lastDot dot">.</span></span></span>Hacking Kiwi</h1><div class="level1"><p>Kiwi is not only a standalone application, it is also a flexible text parsing library that comes with a very easy to use templating system for XML documents.</p><p>Kiwi is actually embedded within <a href="http://www.ivy.fr/tahchee">Tahchee</a> as a text to HTML plugin that makes it easy to write Web pages.</p></div></div><div class="section"><h1 class="heading"><span class="number"><span class="level0">7<span class="lastDot dot">.</span></span></span>Relation to Markdown and other text markups</h1><div class="level1"><p><span class='term'>Kiwi</span> is actually very close to <a href="#MARKDOWN">Markdown</a> (a very well done text markup), but it has a few noticeable differences:</p><ul><li>Code blocks must be prefixed by <code>&gt;</code> characters (in Markdown, this is the notation for blockquoted. We decided to use this in Kiwi because code blocks usually contain blank lines, so we wanted to make explicit that the code block contained a block line.</li></ul><ul><li>Block quotes must be indented, and not prefixed by the <code>&gt;</code> characters. Block quotes are just like other paragraphs, so we did not want them to have a different formatting. So the notation for block quotes and code blocks are just the opposite of Markdown.</li></ul><ul><li>Underscore notation represents a <span class='term'>term</span> in Kiwi, while in Markdown it is the same as using <code>*</code> (emphasis)</li></ul><ul><li>You can really insert your HTML markup anywhere, you have no limitations as in Markdown</li></ul><p>Here are features that are not found in Markdown:</p><ul><li>Table support </li><li>Notes, examples, and groups </li><li>Footnotes </li><li>Detailed bilbiographic references</li></ul><p>Kiwi markup was designed to be even more flexible, than markdown, especially when using inline HTML. When writing HTML in Kiwi, the only requirement is to conform to an XML syntax, which means that every opened tag must be closed, otherwise a warning will be issued during the translation.</p><p><a href="#ASCIIDOC">Asciidoc</a> is another well supported and powerful markup to HTML (and PDF) processor, which is helpful in writing documentation. ASCIIDOC may be more powerful than Kiwi for writing large or complex documents. However, we believe that Kiwi is more adapted to common documentation requirements, and can be easily customized to meet specific requirements.</p><p>Kiwi has been in development for more than 5 years (it used to be named SimTex) and has a mature architecture, which proved to be both flexible and fast. It was designed to be extensible and easily embeddable in Web applications for easy text to HTML conversion (which is always useful, even if WYSIWIG editors are now available).</p></div></div></div></div>
+<div class="kiwiReferences"><div class="entry"><div class="name"><a name="MARKDOWN">MARKDOWN</a></div><div class="content"> <a href="http://daringfireball.net/projects/markdown/syntax">http://daringfireball.net/projects/markdown/syntax</a></div></div><div class="entry"><div class="name"><a name="ASCIIDOC">ASCIIDOC</a></div><div class="content"> <a href="http://www.methods.co.nz/asciidoc/">http://www.methods.co.nz/asciidoc/</a></div></div></div>
+</body>
+</html>

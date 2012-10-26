@@ -1,0 +1,35 @@
+hola mundo como
+
+vas
+
+Titulo del frame #
+--------------------------
+subtítulo del mismo frame 
+
+texto antes de las doble columnas	
+
+..col:50%
+	
+	# título del bloque
+	
+	sigue en el bloque
+	sigue y sigue
+	
+	hasta que desaparezca el indentado
+
+..col:50%
+
+	# título del bloque
+	
+	sigue en el bloque
+	sigue y sigue
+	
+	hasta que desaparezca el indentado
+	
+..end
+
+texto después de las doble columnas
+
+'''
+mas vale ultimo hombre en pie que una casa rodante
+''' chapulín colorado

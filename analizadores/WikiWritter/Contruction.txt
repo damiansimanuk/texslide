@@ -1,0 +1,2 @@
+pyuic4 -o app_ui.py -x app_ui.ui
+pyrcc4 app_ui.qrc -o app_ui_rc.py

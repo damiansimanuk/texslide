@@ -1,0 +1,33 @@
+== Kiwi Roadmap
+
+Version 1.0::
+
+	[ ] Docs: Completely up-to-date manual
+	[ ] Docs: Embedding guide/technote
+	[ ] Embedding: provide default JavaScript scripts for TOC, navigation, etc
+	[ ] Provide scripts to make PDF generation easier
+	[ ] Provide alternate stylesheet
+	[ ] Provide syntax highlighting for some editors
+
+Version 0.9::
+
+	[X] Embedding: '-f' option to show offsets of elements
+	[X] Embedding: '-level' option to increase the depth of sections headers
+	[X] Markup: wiki-like '==Section' for section declaration
+	[X] Markup: wiki-like '<<<' and '>>>' for preformatted blocks
+	[X] Markup: '[ ]' and '[X]' for to-do lists
+	[X] Markup: '|anchor|' for specifying anchors
+	[ ] Markup: 'Title:' line before a list to make a list header
+	[ ] Automatic resolution of unresolved link
+	[ ] Report of broken links within the document
+	[X] Proper 'setup.py' script
+
+Version 0.8::
+
+	[X] XML specifies original markup offsets in text
+	[X] Speed improvements
+	[X] Easier embedding
+	[X] Definition items support
+
+# EOF
+

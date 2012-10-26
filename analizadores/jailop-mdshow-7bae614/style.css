@@ -1,0 +1,57 @@
+body 
+{
+  margin: 40px 0px; 
+  padding: 0px;
+  text-align: center;
+  font-size: 28px;
+  line-height: 100%;
+  font-family: Times, Serif;
+  background-color: #eee;
+}
+
+p
+{
+}
+
+.section
+{
+	width: 820px;
+	margin: 0px auto;
+	text-align: left;
+	line-height: 130%;
+	-moz-border-radius: 20px;
+	-webkit-border-radius: 20px;
+	border-radius: 20px;
+	padding: 20px;
+	border-width: 1px;
+	border-style: solid;  
+	border-color: black;
+	background-color: #fff;
+}
+
+h1 
+{
+  font-size: 70px;
+  line-height: 100%;
+  text-align: left;
+}
+
+h2 
+{
+  font-size: 48px;
+  line-height: 110%;
+  text-align: left;
+  border-bottom: 1px solid;
+}
+
+li
+{
+  text-align: left;
+}
+
+code
+{
+  font-size: 20px;
+  font-family: monospace;
+}
+

@@ -783,6 +783,7 @@ class ConvertFunction():
    
     def list(self,lines):        
         # Debug(":list: ingresa ",2)
+        ## yas 
         find = self.regex['listOpen'].search(lines[0])
         nivel = len(find.group(1))
         curItem=[find.group(2)]
@@ -895,7 +896,7 @@ class ConvertFunction():
             # Debug(codeh,5)
             return codeh
         else:
-            # damian: aca se deberia hacer general
+            # damian: aca se deberia hacer general (¿para latex?)
             txt = code.replace('&', '&amp;')
             txt = txt.replace('<', '&lt;')
             txt = txt.replace('>', '&gt;')
@@ -921,11 +922,13 @@ class ConvertFunction():
             lineref += 1
             
             
-            analice=re.search(r'^~~\w~~(.*)',line,re.DOTALL|re.UNICODE)
-            if analice:
+            analise=re.search(r'^~~\w~~(.*)',line,re.DOTALL|re.UNICODE)
+            if analise:
                 Debug(':parser: ------ linea analizada ------',2)
                 newblock=True
-                result=analice.group(1)
+                result=analise.group(1)
+            # acá en adelante se podría hacer todo con if si se complican los
+            # análisis de los bloques.
             else:
                 newblock=False
                 for block in block_orden:
@@ -959,31 +962,36 @@ class ConvertFunction():
                 body_parser.append(result)
                 joinLines=[]
             elif re.search(r'^\s*$',line):
-                """
-                Si no hay nuevo bloque pero hay salto de linea,
-                osea una linea vacia => hay un nuevo parrafo
-                """
+                # Si no hay nuevo bloque pero hay salto de linea,
+                # osea una linea vacia => hay un nuevo parrafo
                 body_parser.append(self.newPara(joinLines))
                 joinLines=[]
             else:
-                """ Concatena las lineas """
+                # Concatena las lineas
                 joinLines.append(line)
 
         return('\n'.join(body_parser))
         
     def newPara(self,joinLines,para=True):
-        # Este método analiza los parrafos, y por ende todo las marcas
-        # de parrafos, como ser negrita, mono, etc.Recibe una linea,
-        # que está unida y procesa por linea.
+        """
+        Recibe una lista (un parrafo) y analiza sus partes.
+        Para los enlaces y notas al pie es necesario detectar
+        los #id (eso lo hace convert)
+        ## USO:
+        >>> ts=mark2slide.ConvertFunction()
+        >>> text="hola __mundo__ como //estas//"
+        >>> ts.newPara([text])
+        '\n<P>hola <U>mundo</U> como <I>estas</I></P>'
+        """
+                
         if not joinLines:
             return ('')
         line = '\n'.join(joinLines)
-        #Debug(line,0)
+        # Debug(line,0)
 
         for block in ['Mono', 'Bold', 'Italic', 'Underline','Strike']:
             subst=self.tags['font'+block]
-            line = self.regex['font'+block].\
-                   sub(subst,line)
+            line = self.regex['font'+block].sub(subst,line)
 
         line=self.regex['footnote'].sub(self.fNotes,line)
         
@@ -996,7 +1004,6 @@ class ConvertFunction():
     def fNotes(self,match):
         _id=match.group(1)
         Debug(":fNotes: %s"%_id,2)
-
         x=self.addFootNote(_id)
         if x ==0:
             Debug("            YEA",8)
@@ -1125,7 +1132,7 @@ class ConvertFunction():
                     
         return(indexReturn)
                         
-	def convert(self,body):
+    def convert(self,body):
         """
         Este método analiza el body recibido, que es directamente
         el *.ts y lo separa en distintos slides, analizando los
@@ -1169,8 +1176,7 @@ class ConvertFunction():
         joinLines=[]
         result=''
         voidLine=True
-
-        # Este bucle se usa para preprocesar el texto.
+        ## Este bucle se usa para preprocesar el texto.
         # - separan los slides,
         # - analizan los bloques de código
         # - escapes
@@ -1343,18 +1349,11 @@ def convert(body):
 if __name__ == "__main__":
     convert(alltext)
 
+    """asdf"""
+
+    '''asdf'''
 
 
-    ''' 
-    df
-    
-    '''
-    
-    ¨ """
-    asd
-    """
-    "df" 
-    'fd'
 #~ for i in range(10):
     #~ Debug("hola mundo %s"%i,i)
 # Debug("En el convert se tiene",0)

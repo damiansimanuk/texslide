@@ -1,0 +1,4 @@
+Here is <[escaped _markup_ and <xml> <tags />]> and here is the same escaped
+text, with the escape sequence: \"<[escaped _markup_ and <xml> <tags />]>".
+
+The other way of escaping is <[\"this is _escaped_"]>.
