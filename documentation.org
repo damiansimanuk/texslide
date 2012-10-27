@@ -80,12 +80,12 @@ después del subrayado
 
 Los párrafos son simples, están separados por doble salto de linea
 
-#+begin_example
+#+BEGIN_EXAMPLE
 Este es un párrafo. Tiene texto en /itálica/ en *negrita*, 
 _subrayado_, -tachada- y `monospace` 
 
 Este es otro párrafo
-#+end_example
+#+END_EXAMPLE
 
 Notar las marcas para escribir textos en /itálica/, *negrita*,
 _subrayado_, -tachada- y  =monospace=
