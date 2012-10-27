@@ -3,7 +3,8 @@
 En este documento se describe como obtener, instalar, usar y hasta
 contribuir con TexSlide
 
-** Instalación
+
+* Instalación
 
 *** Descargar
 
@@ -11,32 +12,32 @@ contribuir con TexSlide
 
 
 
-** Guía de Usuario
+* Guía de Usuario
 
 TexSlide es un lenguaje de marcado que se destaca por ser optimizado
 para generar slides.
 
-Primero se analizan los Frames, cada Frame puede contener distintas
+Primero se analizan los Slides, cada Slide puede contener distintas
 marcas, como códigos, citas, columnas, imagenes, notas al pie, etc.
 
 
-*** Frames
+** Slides
 
-Los frames se entenderán con el siguiente ejemplo
+Los slides se entenderán con el siguiente ejemplo
 
 #+BEGIN_EXAMPLE
 
-Frame (nivel 1) 
+Slide (nivel 1) 
 ================                  
 
 párrafo...
 
-Frame (nivel 2)
+Slide (nivel 2)
 ----------------
 
 párrafo...
 
-Frame (nivel 3)
+Slide (nivel 3)
 ................
 
 párrafo...
@@ -47,17 +48,17 @@ Como se podrá entender cada slide puede conter un título, y el nivel
 está dado por las distintas marcas de *subrayado*, sean el igual (===), el guión
 medio (=-=) o el punto (=.=).
 
-También se pueden crear Frames sin Títulos:
+También se pueden crear Slides sin Títulos:
 
 #+BEGIN_EXAMPLE
 
 ===========================                  
 
-párrafo del primer Frame... 
+párrafo del primer Slide... 
 
 ---------------------------
 
-párrafo del segundo Frame...
+párrafo del segundo Slide...
 
 #+END_EXAMPLE
 
@@ -65,9 +66,9 @@ Se pueden usar subtítulos
 
 #+BEGIN_EXAMPLE
 
-Frame (nivel 2)
+Slide (nivel 2)
 -------------------
-subtítulo del frame 
+subtítulo del slide 
 
 parrafo...
 
@@ -76,7 +77,7 @@ parrafo...
 Para que tome como subtítulo debe estar justo en la siguiente linea
 después del subrayado 
 
-*** Párrafos
+** Párrafos
 
 Los párrafos son simples, están separados por doble salto de linea
 
@@ -91,8 +92,340 @@ Notar las marcas para escribir textos en /itálica/, *negrita*,
 _subrayado_, -tachada- y  =monospace=
 
 
+** Links
 
-** Contribuir
+Existen varias formas de insertar links.
+
+*** Forma sencilla sin etiqueta
+
+copiando el enlace direcatamente =https://github.com/damiansimanuk/texslide.git=
+
+*** Forma sencilla con etiqueta
+
+Este es un link: =[repositorio de Texslide https://github.com/damiansimanuk/texslide.git]=
+
+*** Forma avanzada
+
+Sirve para integrar  con las figuras, notas al pie y
+referencias. Ejemplo link a =[google]= o =[Google google]=
+
+=[google]:http://google.com.ar=
+
+*Nota:* La forma avanzada es muy útil cuando necesitamos hacer referencia
+varias veces a la misma dirección!
+
+** Notas al Pie
+
+Las notas al pie (footnote) se pueden escribir muy fácilmente, ej:
+
+#+BEGIN_EXAMPLE
+Footnotes[^id] soportan identificadores [^id] y también automáticos[^#]
+
+[^id]: Esta es una nota al pie con id fijo
+[^#]: y esta otra nota que adquiere un numero automáticamente
+#+END_EXAMPLE
+
+
+** Listas
+
+las listas se realizan con un guión medio (=-=) ej:
+
+#+BEGIN_EXAMPLE
+- ítem
+- otro ítem
+#+END_EXAMPLE
+
+*** Listas Numeradas
+
+Las listas ordenadas (/numeradas/) se definen con un número seguido de
+un punto, así:
+
+#+BEGIN_EXAMPLE
+1. ítem
+2. otro ítme
+#+END_EXAMPLE
+
+El valor numérico no es tenído en cuenta.
+
+*** Listas combinadas
+
+Se podrán realizar listas combinadas, para tal caso se necesita usar
+espacios o =TAB=. El TAB es reemplazado por 4 espacios. ej:
+
+#+BEGIN_EXAMPLE
+- ítem
+   - sub ítem
+   - otro sub ítem
+- otro ítme
+   1. sub ítem numerado
+   2. otro sub ítem
+1. acá termina la lista 
+2. anterior y empieza otra
+   - también
+   - es multinivel
+3. muy fácil! ¿No?
+#+END_EXAMPLE
+
+*Nota:* tanto los ítems =-= como =1.= necesitan un espacio antes 
+del texto.
+
+*Nota 2:* no se permiten, /por el momento/, listas con multipárrafos.
+
+** Listas de definiciones
+
+:Hola:
+  Saludo copado  
+  lo que dice la gente
+:Chau:
+  Saludo de despedida
+  cuando uno se va
+  
+Ups!... que complicado...
+
+*Nota:* Por el momento *no soporta multi párrafo*
+
+** Imágenes
+
+Las imágenes son muy fáciles de insertar, basta poner el
+=nombre.extencion= y se pueden usar distintas opciones, para setear el
+temaño, la alineación y el título ;)
+
+#+BEGIN_EXAMPLE
+[openbox.png]
+#+END_EXAMPLE
+
+y con título
+
+#+BEGIN_EXAMPLE
+[logo.png]
+..Este es el logo
+#+END_EXAMPLE
+
+*Nota:* las imágenes solo soporta la dirección relativa a la carpeta
+ donde está el código fuente, y las imagenes están en el directorio
+ *figures*
+
+
+** Citas
+
+Las citas se incorporan con doble comillas simples '' ej:
+
+#+BEGIN_EXAMPLE
+'' Chapulín Colorado
+En casa de herrero amanece mas temprano
+''
+#+END_EXAMPLE
+
+o 
+
+#+BEGIN_EXAMPLE
+''
+En casa de herrero amanece mas temprano
+'' Chapulín Colorado
+#+END_EXAMPLE
+
+
+** Notas
+
+Se pueden incorporar notas que no serán visibles por defecto en los
+distintos Slides. 
+
+#+BEGIN_EXAMPLE
+..note: Esta nota solo se verá cuando se presiona la tecla n en el
+navegador
+#+END_EXAMPLE
+
+** Comentarios
+
+Los comentarios no son visibles en la presentación final. Un
+comentario puede escribirse =//= lo que le sigue es un comentario, ej:
+
+#+BEGIN_EXAMPLE
+Esto es un párrafo que tiene un coemtnario // acá está el comentario
+pero el comentario no se ve en la presentación final // que bueno
+#+END_EXAMPLE
+
+
+** Bloques
+
+Los bloques son lo mas diferenciado de TexSlide con otros lenguajes de
+marcado. 
+
+#+BEGIN_EXAMPLE
+__example__ Párrafos ___________________
+
+Párrafo...
+
+Párrafo...
+________________________________________ 
+#+END_EXAMPLE
+
+Existen varios tipos de bloques:
+
+- examples
+- alert
+- theorem
+- definition
+- note
+- block
+
+Los bloques pueden tener un Título y como cuerpo cualquier marca (con
+epcepción de principio y fin del Slide)
+
+Si se desean anidar los bloques es necesario usar indentados a los
+bloques así:
+
+#+BEGIN_EXAMPLE
+__theorem__ Usando TexSlide _______________________________
+TexSlide es fácil de usar porque sus marcas son sencillas
+y es vistoso cuando se trabaja con el código fuente, Ah, y 
+mira cuando se anidan los bloques 
+
+  __note________________________________
+  
+  Yea! este es un buen ejemplo de *Nota* 
+  Es un bloque ¿interesante?
+  _______________________________________
+  
+y aquí termina el teorema
+___________________________________________________________
+#+END_EXAMPLE
+
+*Nota:* La longitud de las barras =______= no imprata, se requiere que
+ sea mayor que 4, pero queda mas vistoso en el código fuente si se usa
+ una buena cantidad de estas.
+
+
+** Columnas
+
+las columnas se pueden insertar con =##ancho##=, donde ancho es el
+porcentaje. se pueden insertar por ejemplo 2 columnas pero el ancho
+total siempre es 100%. Ej:
+
+#+BEGIN_EXAMPLE
+##60%##
+
+Párrafos... 
+Listas...
+Tablas...
+etc. en la columna 1, columna de la izquierda 
+
+##40%##
+
+columna 2 (columna a la derecha) tiene un ancho del 40% mientras la
+columna 1 tiene 60% de ancho.
+
+####   //fin de columnas
+#+END_EXAMPLE
+
+Se puede forzar el fin de las columnas con a menos 4 =#=, aunque
+tambien termina automáticamente cuando termina el Slide.
+
+
+** Tablas
+
+Ejemplo de Tablas
+
+#+BEGIN_EXAMPLE
+| tabla 11 | tabla 12 |
+| tabla 21 | tabla 22 |
+#+END_EXAMPLE
+
+Otro ejemplo:
+
+#+BEGIN_EXAMPLE
+| Alumnos | Notas |
+| Alfredo |     7 |
+| Hugo    |     6 |
+..Notas de los vagos
+#+END_EXAMPLE
+
+Se puede insertar un título a la tabla (como se vé en el código
+anterior) 
+
+*** Combinando las celdas
+
+#+BEGIN_EXAMPLE
+|>2     Alumos  |      |
+|v3             | Pepe |
+| Aprobados     | Seba |
+|               | Juan |
+#+END_EXAMPLE
+
+A continuación se define que *Alumnos* es un título
+
+#+BEGIN_EXAMPLE
+|>2_     Alumos |      |
+|v3             | Pepe |
+| Aprobados     | Seba |
+|               | Juan |
+#+END_EXAMPLE
+
+y otra tabla más, con doble combinación 
+
+#+BEGIN_EXAMPLE
+|>2v3           | 13 |
+|      columna  | 23 | 
+|       de 2x3 | 33 |
+|  41  |   42   | 43 |  
+#+END_EXAMPLE
+
+Que se puede escribir también así:
+
+#+BEGIN_EXAMPLE      
+|>     columna  | 13 | 
+|^      de 2x3  | 23 |
+|^              |    |
+|  41  |   42   | 43 |   
+#+END_EXAMPLE
+
+Y una tabla, apenas mas compleja, pero muy interesante
+
+#+BEGIN_EXAMPLE
+|      Alumos            <|                          
+---------------- ----------   
+|l Aprobados    |r Pepe   | 	
+|^              | Seba    |
+|^              | Juan    |
+---------------- ----------
+|  Desaprobados | José    | 
+|^              | Nadia   |
+|^              | Alfredo |
+---------------- ----------
+..Notas del tercer parcial
+#+END_EXAMPLE
+
+*Nota:* con la `l` y la `r` se elijen los textos la izq. y derecha.
+
+*Nota2:* por defecto los textos están centrados verticalemente, y
+ alineados a izquierda, si son numéricos a la derecha ;).
+   
+center, right, left, top y bottom --> c r l t b (notar que center
+vertical es por defecto)
+
+ie: v5rb  // combiana en vertical 5 filas con texto a la derecha y abajo
+ie: v5L   // 5 filas combinadas con el texto a 90 grados
+
+*Nota3:* la opción =L= rota el texto a la izquierda en 90 grados.
+
+#+BEGIN_EXAMPLE
+__note___________________________________________________________
+
+- Cada celda que empieza con `*` sea `|*` o `|   *` son cabeceras
+- Para combinar columnas se puede usar `||` o `|>4` donde 4 es el 
+  número de columnas combinadas
+- Para combinar filas se usa `|v4` para combinar 4 filas. 
+   - Cuando se combinan filas, se unen todos los textos. los 
+     espacios se ignoran así: ` {2,}` se convierte en ` ` 
+   - los saltos de lineas se ignoran pero se pueden añadir saltos 
+     manuales como siempre así: `\\`
+- Cada celda se procesa por separado
+__________________________________________________________________
+#+END_EXAMPLE
+
+
+
+* Contribuir
 
 
 
