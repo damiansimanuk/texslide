@@ -173,13 +173,15 @@ del texto.
 
 ** Listas de definiciones
 
+#+BEGIN_EXAMPLE
 :Hola:
   Saludo copado  
   lo que dice la gente
 :Chau:
   Saludo de despedida
   cuando uno se va
-  
+#+END_EXAMPLE
+
 Ups!... que complicado...
 
 *Nota:* Por el momento *no soporta multi párrafo*
