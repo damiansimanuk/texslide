@@ -29,62 +29,66 @@ Los frames se entenderán con el siguiente ejemplo
 Frame (nivel 1) 
 ================                  
 
-parrafo...
-
-parrafo...
-
+párrafo...
 
 Frame (nivel 2)
--------------------------
+----------------
 
-parrafo...
-
+párrafo...
 
 Frame (nivel 3)
-.........................
+................
 
-parrafo...
+párrafo...
 
 #+END_EXAMPLE
 
-
 Como se podrá entender cada slide puede conter un título, y el nivel
-está dado por las distintas marcas, sean el igual, la raya (guión
-medio) o el punto.
+está dado por las distintas marcas de *subrayado*, sean el igual (===), el guión
+medio (=-=) o el punto (=.=).
 
 También se pueden crear Frames sin Títulos:
 
 #+BEGIN_EXAMPLE
 
+===========================                  
 
-================                  
+párrafo del primer Frame... 
 
-parrafo del primer Frame... 
+---------------------------
 
-
--------------------------
-
-
-parrafo del segundo Frame...
-
-
-.........................
-
-parrafo del tercer Frame...
+párrafo del segundo Frame...
 
 #+END_EXAMPLE
 
-Y se pueden usar subtítulos
+Se pueden usar subtítulos
 
 #+BEGIN_EXAMPLE
 
 Frame (nivel 2)
---------------------
+-------------------
 subtítulo del frame 
 
 parrafo...
 
 #+END_EXAMPLE
+
+Para que tome como subtítulo debe estar justo en la siguiente linea
+después del subrayado 
+
+*** Párrafos
+
+Los párrafos son simples, están separados por doble salto de linea
+
+#+begin_example
+Este es un párrafo. Tiene texto en /itálica/ en *negrita*, 
+_subrayado_, -tachada- y `monospace` 
+
+Este es otro párrafo
+#+end_example
+
+Notar las marcas para escribir textos en /itálica/, *negrita*,
+_subrayado_, -tachada- y  =monospace=
 
 
 
